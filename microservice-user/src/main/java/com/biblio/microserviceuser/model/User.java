@@ -27,7 +27,7 @@ public class User implements UserDetails {
 
     @Column(unique = true)
     private String email;
-    private boolean active;
+
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
@@ -79,7 +79,7 @@ public class User implements UserDetails {
         this.name = name;
     }
 
-    public String setSurname() {
+    public String getSurname() {
         return surname;
     }
 
@@ -117,14 +117,6 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
     @Override
     public String getUsername() {
         return getEmail();
@@ -147,7 +139,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return isActive();
+        return true;
     }
 
     public Date getDateCreation() {
@@ -178,7 +170,6 @@ public class User implements UserDetails {
                 ", surname='" + surname + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", active=" + active +
                 ", roles=" + roles +
                 ", dateCreation=" + dateCreation +
                 ", dateModified=" + dateModified +

@@ -7,7 +7,7 @@ public interface UserDAO extends JpaRepository<User, Long> {
 
     User getOne(Long id);
 
-    User findByNome(String nome);
+    User findByName(String name);
 
     User findByEmail(String email);
 }
