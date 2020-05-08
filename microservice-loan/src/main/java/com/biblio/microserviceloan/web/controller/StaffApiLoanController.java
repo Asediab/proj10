@@ -4,7 +4,6 @@ import com.biblio.microserviceloan.model.Loan;
 import com.biblio.microserviceloan.service.LoanStaffService;
 import com.biblio.microserviceloan.web.exceptions.LoanExistException;
 import com.biblio.microserviceloan.web.exceptions.LoansNotFoundException;
-import com.biblio.microserviceloan.web.exceptions.WrongDateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +18,7 @@ public class StaffApiLoanController {
     @Autowired
     private LoanStaffService loanStaffService;
 
-    @PostMapping(value = "/staffApi/loans")
+    @PostMapping(value = "/loans/staffApi")
     public ResponseEntity<Void> addLoan(@RequestBody @Valid Loan loan) {
         Loan newLoan = loanStaffService.saveNew(loan);
         if (newLoan == null) {
@@ -29,7 +28,7 @@ public class StaffApiLoanController {
     }
 
 
-    @PutMapping(value = "/staffApi/loans")
+    @PutMapping(value = "/loans/staffApi")
     public ResponseEntity<Void> returnLoan(@RequestBody @Valid Loan loan) {
         if (!loanStaffService.existByModel(loan)) {
             throw new LoanExistException("Loan not exist");
@@ -40,12 +39,10 @@ public class StaffApiLoanController {
 
     }
 
-    @GetMapping(value = "/staffApi/loansByDate")
-    public List<Loan> loansByDateOfExpiration(@RequestBody Loan loan) {
-        List<Loan> loanList = loanStaffService.listLoanByDate(loan.getDateExpiration());
-        if (loanList == null) {
-            throw new WrongDateException("Invalid date received");
-        }
+    @GetMapping(value = "/loans/staffApi/loansByDate")
+    public List<Loan> loansByDateOfExpiration() {
+        List<Loan> loanList = loanStaffService.listLoanByDate();
+
         if (loanList.isEmpty()) {
             throw new LoansNotFoundException("No loans for a given date");
         }

@@ -63,10 +63,9 @@ public class LoanStaffServiceImpl implements LoanStaffService {
     }
 
     @Override
-    public List<Loan> listLoanByDate(LocalDate date) {
-        if (date == null) {
-            return null;
-        }
-        return loanDAO.findByDateExpirationAndReturnedIsFalse(date);
+    public List<Loan> listLoanByDate() {
+        LocalDate date = LocalDate.now();
+
+        return loanDAO.findByDateExpirationLessThanAndReturnedIsFalse(date);
     }
 }

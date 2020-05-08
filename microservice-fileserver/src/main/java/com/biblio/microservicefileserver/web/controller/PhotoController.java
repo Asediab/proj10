@@ -19,7 +19,7 @@ public class PhotoController {
     @Autowired
     ApplicationPropertiesConfiguration applicationPropertiesConfiguration;
 
-    @GetMapping(value = "/image")
+    @GetMapping(value = "/image/")
     ResponseEntity<Resource> read(@RequestParam String name) {
         File file = new File(applicationPropertiesConfiguration.getPhoto_dir() + name + applicationPropertiesConfiguration.getPhoto_postfix());
         if (file.isFile()) {

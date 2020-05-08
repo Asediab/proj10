@@ -14,7 +14,7 @@ public interface LoanDAO extends JpaRepository<Loan, Long> {
 
     Loan findByUserIdAndCopyOfDocumentIdAndReturnedIsFalse(Long userId, Long documentId);
 
-    List<Loan> findByDateExpirationAndReturnedIsFalse(LocalDate matchesDate);
+    List<Loan> findByDateExpirationLessThanAndReturnedIsFalse(LocalDate matchesDate);
 
 
 }

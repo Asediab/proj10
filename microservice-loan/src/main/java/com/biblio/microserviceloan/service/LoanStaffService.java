@@ -2,7 +2,6 @@ package com.biblio.microserviceloan.service;
 
 import com.biblio.microserviceloan.model.Loan;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface LoanStaffService {
@@ -17,6 +16,6 @@ public interface LoanStaffService {
 
     boolean existByModel(Loan loan);
 
-    List<Loan> listLoanByDate(LocalDate date);
+    List<Loan> listLoanByDate();
 
 }

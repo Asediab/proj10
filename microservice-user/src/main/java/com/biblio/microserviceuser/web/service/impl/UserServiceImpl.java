@@ -13,29 +13,34 @@ import java.util.Collections;
 @Service
 public class UserServiceImpl implements UserService {
 
+
+    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
     @Autowired
-    private UserDAO userDAO;
+    private UserDAO repository;
 
-
-    private static final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
-
+    @Override
     public User findByEmail(String email) {
-        return userDAO.findByEmail(email);
+        return repository.findByEmail(email);
     }
 
+    @Override
+    public void create(User user) {
 
-    public void save(User registration) {
-        User existing = userDAO.findByEmail(registration.getEmail());
+        User existing = repository.findByEmail(user.getEmail());
         if (existing == null) {
-            throw new IllegalArgumentException("user already exists: " + existing.getEmail());
+            throw new IllegalArgumentException("user already exists: " + existing.getUsername());
         }
-        User user = new User();
-        user.setName(registration.getName());
-        user.setSurname(registration.getSurname());
-        user.setEmail(registration.getEmail());
-        user.setPassword(passwordEncoder.encode(registration.getPassword()));
+
+        String hash = encoder.encode(user.getPassword());
+        user.setPassword(hash);
         user.setRoles(Collections.singleton(Role.USER));
-        userDAO.save(user);
+
+        repository.save(user);
+    }
+
+    @Override
+    public User findById(Long id) {
+        return repository.findById(id).orElse(null);
     }
 }

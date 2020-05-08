@@ -30,7 +30,7 @@ public class WebApiLoanController {
         return loanList;
     }
 
-    @PutMapping(value = "/prolongate/loan/{loanID}")
+    @PutMapping(value = "/loans/prolongateLoan/{loanID}")
     public ResponseEntity<Void> prolongateLoanPeriod(@PathVariable("loanID") Long loanID) {
         Loan loanProlongate = loanWebService.getOne(loanID);
         if (loanProlongate == null) {

@@ -1,12 +1,11 @@
 package com.biblio.microserviceuser.web.controller;
 
 import com.biblio.microserviceuser.model.User;
+import com.biblio.microserviceuser.web.exceptions.UserNotFoundException;
 import com.biblio.microserviceuser.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -18,13 +17,25 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/current", method = RequestMethod.GET)
+    @GetMapping(value = "/current")
     public Principal getUser(Principal principal) {
         return principal;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PreAuthorize("#oauth2.hasScope('server')")
+    @PostMapping
     public void createUser(@Valid @RequestBody User user) {
-        userService.save(user);
+        userService.create(user);
+    }
+
+
+    //    @PreAuthorize("#oauth2.hasScope('server')")
+    @GetMapping(value = "/{id}")
+    public User getUserById(@PathVariable("id") Long id) {
+        User user = userService.findById(id);
+        if (user == null) {
+            throw new UserNotFoundException("Invalid userID");
+        }
+        return user;
     }
 }

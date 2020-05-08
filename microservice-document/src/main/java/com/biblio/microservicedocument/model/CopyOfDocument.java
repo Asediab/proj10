@@ -12,7 +12,6 @@ public class CopyOfDocument {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NonNull
     @ManyToOne
     @JoinColumn(name = "document_id", nullable = false)
     private Document document;

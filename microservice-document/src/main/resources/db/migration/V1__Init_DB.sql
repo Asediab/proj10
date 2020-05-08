@@ -9,14 +9,15 @@ create table copy_of_document
 
 create table document
 (
-    id                  bigserial    not null,
-    author              varchar(255) not null,
-    copy_available      int4         not null,
-    number_of_pages     int4         not null,
-    titre               varchar(255) not null,
-    year_os_issue       date         not null,
-    type_of_document_id int8         not null,
-    photo               varchar(255) not null,
+    id                  bigserial     not null,
+    author              varchar(255)  not null,
+    copy_available      int4          not null,
+    number_of_pages     int4          not null,
+    titre               varchar(255)  not null,
+    year_os_issue       date          not null,
+    type_of_document_id int8          not null,
+    photo               varchar(255)  not null,
+    description         varchar(2000) not null,
     primary key (id)
 );
 

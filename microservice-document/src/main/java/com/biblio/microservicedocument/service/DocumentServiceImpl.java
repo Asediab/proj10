@@ -32,4 +32,9 @@ public class DocumentServiceImpl implements DocumentService {
     public List<Document> findAll() {
         return documentDAO.findAll();
     }
+
+    @Override
+    public Document getOne(Long id) {
+        return documentDAO.getOne(id);
+    }
 }

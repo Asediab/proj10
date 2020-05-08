@@ -12,6 +12,8 @@ import java.util.List;
 @Entity
 public class Document {
 
+//    TODO add HATEOAS
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -41,6 +43,9 @@ public class Document {
 
     @Column(nullable = false)
     private String photo;
+
+    @Column(nullable = false)
+    private String description;
 
     @JsonIgnore
     @OneToMany(mappedBy = "document", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -121,6 +126,14 @@ public class Document {
         this.photo = photo;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "Document{" +
@@ -132,6 +145,7 @@ public class Document {
                 ", author='" + author + '\'' +
                 ", copyAvailable=" + copyAvailable +
                 ", photo='" + photo + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

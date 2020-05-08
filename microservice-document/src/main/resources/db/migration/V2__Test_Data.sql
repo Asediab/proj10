@@ -13,14 +13,17 @@ VALUES (1, 'Bibliothèque Mazarine', '23 Quai de Conti, Paris, Île-de-France, 7
 
 
 INSERT INTO public.document (id, author, copy_available, number_of_pages, titre, year_os_issue, type_of_document_id,
-                             photo)
-VALUES (1, 'Marcel Proust', 4, 350, 'À la recherche du temps perdu', '1995-04-25', 1, 'tempperdu');
+                             photo, description)
+VALUES (1, 'Marcel Proust', 4, 350, 'À la recherche du temps perdu', '1995-04-25', 1, 'tempperdu',
+        'À la recherche du temps perdu, couramment évoqué plus simplement sous le titre La Recherche, est un roman de Marcel Proust, écrit de 1906 à 1922 et publié de 1913 à 1927 en sept tomes, dont les trois derniers parurent après la mort de lauteur');
 INSERT INTO public.document (id, author, copy_available, number_of_pages, titre, year_os_issue, type_of_document_id,
-                             photo)
-VALUES (2, 'Marcel Proust', 3, 180, 'Les Plaisirs et les Jours', '2000-04-25', 1, 'plaisirs_les_jours');
+                             photo, description)
+VALUES (2, 'Marcel Proust', 3, 180, 'Les Plaisirs et les Jours', '2000-04-25', 1, 'plaisirs_les_jours',
+        'Les Plaisirs et les Jours is a collection of prose poems and novellas by Marcel Proust. It was first published in 1896 by Calmann-Lévy, and was Proust''s first publication.');
 INSERT INTO public.document (id, author, copy_available, number_of_pages, titre, year_os_issue, type_of_document_id,
-                             photo)
-VALUES (3, 'Marcel Proust', 4, 320, 'Jean Santeuil', '1995-10-20', 1, 'jean_santeuil');
+                             photo, description)
+VALUES (3, 'Marcel Proust', 4, 320, 'Jean Santeuil', '1995-10-20', 1, 'jean_santeuil',
+        'Jean Santeuil is an unfinished novel written by Marcel Proust. It was written between 1896 and 1900, and published after the author''s death. The first French edition was published in 1952 by Gallimard.');
 
 
 INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id)

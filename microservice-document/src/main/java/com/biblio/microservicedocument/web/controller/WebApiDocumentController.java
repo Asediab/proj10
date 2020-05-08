@@ -1,11 +1,15 @@
 package com.biblio.microservicedocument.web.controller;
 
+import com.biblio.microservicedocument.model.CopyOfDocument;
 import com.biblio.microservicedocument.model.Document;
+import com.biblio.microservicedocument.service.CopyOfDocumentService;
 import com.biblio.microservicedocument.service.DocumentService;
 import com.biblio.microservicedocument.web.exceptions.DocumentsNotFoundException;
 import com.biblio.microservicedocument.web.exceptions.SearchOptionsException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +21,10 @@ public class WebApiDocumentController {
     @Autowired
     private DocumentService documentService;
 
-    @GetMapping(value = "/documents")
+    @Autowired
+    private CopyOfDocumentService copyOfDocumentService;
+
+    @GetMapping(value = "/documents/")
     public List<Document> listDocuments() {
         List<Document> docsList = documentService.findAll();
         if (docsList.isEmpty()) {
@@ -37,5 +44,15 @@ public class WebApiDocumentController {
             throw new DocumentsNotFoundException("The database of documents is empty");
         }
         return docsSearchList;
+    }
+
+    @PreAuthorize("#oauth2.hasScope('server')")
+    @GetMapping(value = "/documents/{idCopyDoc}")
+    public CopyOfDocument getDocumentByID(@PathVariable("idCopyDoc") Long docCopyID) throws SearchOptionsException {
+        CopyOfDocument doc = copyOfDocumentService.findById(docCopyID);
+        if (doc == null) {
+            throw new DocumentsNotFoundException("Wrong CopyOfDocumentID");
+        }
+        return doc;
     }
 }

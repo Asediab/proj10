@@ -9,4 +9,6 @@ public interface DocumentService {
     List<Document> filter(String titre, String author);
 
     List<Document> findAll();
+
+    Document getOne(Long id);
 }

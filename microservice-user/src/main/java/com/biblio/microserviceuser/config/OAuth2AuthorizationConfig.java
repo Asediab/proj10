@@ -20,6 +20,7 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
     private TokenStore tokenStore = new InMemoryTokenStore();
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @Autowired
     @Qualifier("authenticationManagerBean")
@@ -35,31 +36,28 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
-        // TODO persist clients details
-
-        // @formatter:off
         clients.inMemory()
                 .withClient("browser")
-                .authorizedGrantTypes("refresh_token", "password")
+                .authorizedGrantTypes("password", "refresh_token")
                 .scopes("ui")
                 .and()
                 .withClient("microservice-document")
-                .secret(env.getProperty("DOCUMENT_SERVER_PASSWORD"))
-                .authorizedGrantTypes("client_credentials", "refresh_token")
-                .scopes("server")
-                .and()
-                .withClient("microservice-fileserver")
-                .secret(env.getProperty("FILES_SERVER_PASSWORD"))
+                .secret(encoder.encode(env.getProperty("DOCUMENT_SERVER_PASSWORD")))
                 .authorizedGrantTypes("client_credentials", "refresh_token")
                 .scopes("server")
                 .and()
                 .withClient("microservice-loan")
-                .secret(env.getProperty("LOAN_SERVER_PASSWORD"))
+                .secret(encoder.encode(env.getProperty("DOCUMENT_SERVER_PASSWORD")))
                 .authorizedGrantTypes("client_credentials", "refresh_token")
                 .scopes("server")
                 .and()
-                .withClient("microservice-user")
-                .secret(env.getProperty("USER_SERVER_PASSWORD"))
+                .withClient("microservice-client")
+                .secret(encoder.encode(env.getProperty("DOCUMENT_SERVER_PASSWORD")))
+                .authorizedGrantTypes("client_credentials", "refresh_token")
+                .scopes("server")
+                .and()
+                .withClient("microservice-batch")
+                .secret(encoder.encode(env.getProperty("DOCUMENT_SERVER_PASSWORD")))
                 .authorizedGrantTypes("client_credentials", "refresh_token")
                 .scopes("server");
         // @formatter:on
@@ -78,7 +76,7 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
         oauthServer
                 .tokenKeyAccess("permitAll()")
                 .checkTokenAccess("isAuthenticated()")
-                .passwordEncoder(new BCryptPasswordEncoder());
+                .passwordEncoder(encoder);
     }
 
 }
