@@ -14,7 +14,7 @@ import java.util.List;
 //@RibbonClient(name = "microservice-loan")
 
 
-@FeignClient(name = "microservice-loan")
+@FeignClient(name = "microservice-loan", configuration = AccountClientConfiguration.class)
 public interface MicroserviceLoanProxy {
 
     @GetMapping(value = "/microservice-loan/loans/{userId}")

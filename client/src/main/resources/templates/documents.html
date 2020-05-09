@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>Biblio</title>
+
+    <div th:replace="fragments/header :: header-css"/>
+
+</head>
+<body>
+
+
+<div th:replace="fragments/header :: nav"/>
+
+<main role="main">
+    <div class="container">
+        <div class="col">
+            <div class="row">
+                <form name="filter" method="get" th:action="@{/}">
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label for="inputName">Author</label>
+                            <input type="text" id="inputName" class="form-control" th:name="author"
+                                   th:placeholder="${param.author}">
+                        </div>
+                        <div class="col-5">
+                            <label for="inputRegion">Title</label>
+                            <input type="text" id="inputRegion" class="form-control" th:name="title"
+                                   th:placeholder="${param.title}">
+                        </div>
+                        <div class="col-1">
+                            <button type="submit" class="btn btn-primary mt-4">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <h3 class="text-center" th:if="${documents.size() == 0}">Try other search criteria.</h3>
+                <!--                <div th:if="${documents.numberOfElements > 0}" th:with="listSize = ${ {5, 10, 15, 20} }"-->
+                <!--                <div th:if="${3 > 0}" th:with="listSize = ${ {5, 10, 15, 20} }"-->
+                <!--                     th:insert="fragments/pagination :: pagination-size(${listSize}, ${documents}, ${url})"></div>-->
+
+
+                <div th:replace="fragments/card-document :: card-document(${documents})"></div>
+            </div>
+        </div>
+        <!--        <div th:if="${documents.numberOfElements > 1}"-->
+        <!--        <div th:if="${2 > 1}"-->
+        <!--             th:replace="fragments/pagination :: pagination-pages(${numberOfPages}, ${documents}, ${url})"></div>-->
+    </div>
+</main>
+
+
+<div th:replace="fragments/footer :: footer"/>
+
+</body>
+</html>

@@ -12,8 +12,6 @@ import java.util.List;
 @Entity
 public class Document {
 
-//    TODO add HATEOAS
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

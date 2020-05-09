@@ -24,6 +24,7 @@ public class WebApiDocumentController {
     @Autowired
     private CopyOfDocumentService copyOfDocumentService;
 
+    @PreAuthorize("#oauth2.hasScope('ui')")
     @GetMapping(value = "/documents/")
     public List<Document> listDocuments() {
         List<Document> docsList = documentService.findAll();
@@ -33,6 +34,7 @@ public class WebApiDocumentController {
         return docsList;
     }
 
+    @PreAuthorize("#oauth2.hasScope('ui')")
     @GetMapping(value = "/documents/search")
     public List<Document> searchDocuments(@RequestParam(name = "titre", value = "", required = true) String titre,
                                           @RequestParam(name = "author", value = "", required = true) String author) throws SearchOptionsException {

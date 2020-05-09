@@ -13,12 +13,12 @@ import java.security.Principal;
 //@RibbonClient(name = "microservice-user")
 
 
-@FeignClient(name = "microservice-user")
+@FeignClient(name = "microservice-user", configuration = AccountClientConfiguration.class)
 public interface MicroserviceUserProxy {
 
-    @RequestMapping(value = "/microservice-user/uaa/users/current", method = RequestMethod.GET)
+    @RequestMapping(value = "/uaa/users/current", method = RequestMethod.GET)
     Principal getUser(Principal principal);
 
-    @RequestMapping(value = "/microservice-user/uaa/users", method = RequestMethod.POST)
+    @RequestMapping(value = "/uaa/users", method = RequestMethod.POST)
     void createUser(@Valid @RequestBody UserDTO user);
 }

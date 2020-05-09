@@ -38,7 +38,7 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 
         clients.inMemory()
                 .withClient("browser")
-                .authorizedGrantTypes("password", "refresh_token")
+                .authorizedGrantTypes("refresh_token", "password")
                 .scopes("ui")
                 .and()
                 .withClient("microservice-document")

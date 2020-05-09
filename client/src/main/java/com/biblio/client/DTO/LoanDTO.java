@@ -8,7 +8,11 @@ public class LoanDTO {
 
     private Long userId;
 
+    private UserDTO user;
+
     private Long copyOfDocumentId;
+
+    private CopyOfDocumentDTO copyOfDocumentDTO;
 
     private int numberOfRenewals;
 
@@ -19,6 +23,22 @@ public class LoanDTO {
     private boolean returned;
 
     public LoanDTO() {
+    }
+
+    public CopyOfDocumentDTO getCopyOfDocumentDTO() {
+        return copyOfDocumentDTO;
+    }
+
+    public void setCopyOfDocumentDTO(CopyOfDocumentDTO copyOfDocumentDTO) {
+        this.copyOfDocumentDTO = copyOfDocumentDTO;
+    }
+
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
     }
 
     public Long getId() {
