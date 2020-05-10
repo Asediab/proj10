@@ -38,29 +38,14 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 
         clients.inMemory()
                 .withClient("browser")
+                .secret(encoder.encode(env.getProperty("SERVER_PASSWORD")))
                 .authorizedGrantTypes("refresh_token", "password")
                 .scopes("ui")
                 .and()
-                .withClient("microservice-document")
-                .secret(encoder.encode(env.getProperty("DOCUMENT_SERVER_PASSWORD")))
+                .withClient("microservice")
+                .secret(encoder.encode(env.getProperty("SERVER_PASSWORD")))
                 .authorizedGrantTypes("client_credentials", "refresh_token")
-                .scopes("server")
-                .and()
-                .withClient("microservice-loan")
-                .secret(encoder.encode(env.getProperty("DOCUMENT_SERVER_PASSWORD")))
-                .authorizedGrantTypes("client_credentials", "refresh_token")
-                .scopes("server")
-                .and()
-                .withClient("microservice-client")
-                .secret(encoder.encode(env.getProperty("DOCUMENT_SERVER_PASSWORD")))
-                .authorizedGrantTypes("client_credentials", "refresh_token")
-                .scopes("server")
-                .and()
-                .withClient("microservice-batch")
-                .secret(encoder.encode(env.getProperty("DOCUMENT_SERVER_PASSWORD")))
-                .authorizedGrantTypes("client_credentials", "refresh_token")
-                .scopes("server");
-        // @formatter:on
+                .scopes("server");// @formatter:on
     }
 
     @Override

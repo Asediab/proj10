@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 
-@FeignClient(name = "microservice-loan")
+@FeignClient(name = "microservice-loan", configuration = AccountClientConfiguration.class)
 public interface MicroserviceLoanProxy {
 
     @GetMapping(value = "loans/staffApi/loansByDate")

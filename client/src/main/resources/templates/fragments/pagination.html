@@ -1,0 +1,43 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+>
+
+
+<div th:fragment="pagination-pages (numberOfPages, pageable, url)">
+    <div class="mt-3 ">
+        <ul class="pagination d-flex justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Pages</a>
+            </li>
+            <th:block th:each="numberOfPage : ${numberOfPages}">
+                <li th:if="${numberOfPage -1 == pageable.number}" class="page-item active">
+                    <a class="page-link" href="#" tabindex="-1"
+                       th:utext="${numberOfPage}"></a>
+                </li>
+                <li th:if="${numberOfPage -1 != pageable.number}" class="page-item">
+                    <a class="page-link" th:href="@{${url}(page=${numberOfPage}-1, size=${pageable.size})}"
+                       tabindex="-1"
+                       th:utext="${numberOfPage}"></a>
+                </li>
+            </th:block>
+        </ul>
+    </div>
+</div>
+
+<div th:fragment="pagination-size (listSize, pageable, url)">
+    <ul class="pagination-sm d-flex justify-content-end">
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">Objets par page</a>
+        </li>
+        <th:block th:each="siteParPage : ${listSize}">
+            <li th:if="${siteParPage == pageable.size}" class="page-item active">
+                <a class="page-link" href="#" tabindex="-1"
+                   th:utext="${siteParPage}"></a>
+            </li>
+            <li th:if="${siteParPage != pageable.size}" class="page-item">
+                <a class="page-link" th:href="@{${url}(page=${pageable.number}, size=${siteParPage})}"
+                   tabindex="-1"
+                   th:utext="${siteParPage}"></a>
+            </li>
+        </th:block>
+    </ul>
+</div>

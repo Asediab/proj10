@@ -1,4 +1,4 @@
-package com.biblio.client.proxy;
+package com.biblio.microservicebatch.proxy;
 
 import feign.RequestInterceptor;
 import org.springframework.cloud.security.oauth2.client.feign.OAuth2FeignRequestInterceptor;
@@ -19,12 +19,10 @@ public class AccountClientConfiguration {
 
     private OAuth2ProtectedResourceDetails resource() {
         ResourceOwnerPasswordResourceDetails resourceDetails = new ResourceOwnerPasswordResourceDetails();
-        resourceDetails.setUsername("asediaboli@mail.ru");
-        resourceDetails.setPassword("user");
-        resourceDetails.setAccessTokenUri("http://localhost:9096/uaa/oauth/token");
-        resourceDetails.setClientId("browser");
-        resourceDetails.setGrantType("password");
-        resourceDetails.setScope(Arrays.asList("ui"));
+        resourceDetails.setAccessTokenUri("http://microservice-user/uaa/oauth/token");
+        resourceDetails.setClientId("microservice-batch");
+        resourceDetails.setGrantType("client_credentials");
+        resourceDetails.setScope(Arrays.asList("server"));
         resourceDetails.setClientSecret("password");
         return resourceDetails;
     }

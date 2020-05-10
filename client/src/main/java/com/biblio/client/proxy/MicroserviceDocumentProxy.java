@@ -13,7 +13,7 @@ import java.util.List;
 //@RibbonClient(name = "microservice-document")
 
 
-@FeignClient(name = "microservice-document", configuration = AccountClientConfiguration.class)
+@FeignClient(name = "microservice-document")
 public interface MicroserviceDocumentProxy {
 
     @GetMapping(value = "/documents/")

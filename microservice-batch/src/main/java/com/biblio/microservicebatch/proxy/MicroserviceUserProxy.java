@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 
-@FeignClient(name = "microservice-user")
+@FeignClient(name = "microservice-user", configuration = AccountClientConfiguration.class)
 public interface MicroserviceUserProxy {
 
     @GetMapping(value = "uaa/users/{id}")

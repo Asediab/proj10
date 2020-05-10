@@ -36,7 +36,7 @@
                 </form>
             </div>
             <div class="row">
-                <h3 class="text-center" th:if="${documents.size() == 0}">Try other search criteria.</h3>
+                <h3 class="text-center" th:if="${documents.numberOfElements == 0}">Try other search criteria.</h3>
                 <!--                <div th:if="${documents.numberOfElements > 0}" th:with="listSize = ${ {5, 10, 15, 20} }"-->
                 <!--                <div th:if="${3 > 0}" th:with="listSize = ${ {5, 10, 15, 20} }"-->
                 <!--                     th:insert="fragments/pagination :: pagination-size(${listSize}, ${documents}, ${url})"></div>-->
