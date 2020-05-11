@@ -4,7 +4,8 @@ import com.biblio.microserviceuser.model.User;
 import com.biblio.microserviceuser.web.exceptions.UserNotFoundException;
 import com.biblio.microserviceuser.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,18 +19,20 @@ public class UserController {
     private UserService userService;
 
     @GetMapping(value = "/current")
-    public Principal getUser(Principal principal) {
+    public Principal getUser(@AuthenticationPrincipal Principal principal) {
         return principal;
     }
 
-    @PreAuthorize("#oauth2.hasScope('server')")
     @PostMapping
-    public void createUser(@Valid @RequestBody User user) {
-        userService.create(user);
+    public ResponseEntity<Void> createUser(@Valid @RequestBody User user) {
+        User userSave = userService.create(user);
+        if (userSave == null) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok().build();
     }
 
 
-    //    @PreAuthorize("#oauth2.hasScope('server')")
     @GetMapping(value = "/{id}")
     public User getUserById(@PathVariable("id") Long id) {
         User user = userService.findById(id);

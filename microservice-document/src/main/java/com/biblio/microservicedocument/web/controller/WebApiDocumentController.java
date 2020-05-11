@@ -7,7 +7,6 @@ import com.biblio.microservicedocument.service.DocumentService;
 import com.biblio.microservicedocument.web.exceptions.DocumentsNotFoundException;
 import com.biblio.microservicedocument.web.exceptions.SearchOptionsException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +23,6 @@ public class WebApiDocumentController {
     @Autowired
     private CopyOfDocumentService copyOfDocumentService;
 
-    @PreAuthorize("#oauth2.hasScope('ui')")
     @GetMapping(value = "/documents/")
     public List<Document> listDocuments() {
         List<Document> docsList = documentService.findAll();
@@ -34,7 +32,6 @@ public class WebApiDocumentController {
         return docsList;
     }
 
-    @PreAuthorize("#oauth2.hasScope('ui')")
     @GetMapping(value = "/documents/search")
     public List<Document> searchDocuments(@RequestParam(name = "titre", value = "", required = true) String titre,
                                           @RequestParam(name = "author", value = "", required = true) String author) throws SearchOptionsException {
@@ -48,7 +45,6 @@ public class WebApiDocumentController {
         return docsSearchList;
     }
 
-    @PreAuthorize("#oauth2.hasScope('server')")
     @GetMapping(value = "/documents/{idCopyDoc}")
     public CopyOfDocument getDocumentByID(@PathVariable("idCopyDoc") Long docCopyID) throws SearchOptionsException {
         CopyOfDocument doc = copyOfDocumentService.findById(docCopyID);

@@ -27,13 +27,12 @@ public class StaffApiLoanController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-
     @PutMapping(value = "/loans/staffApi")
     public ResponseEntity<Void> returnLoan(@RequestBody @Valid Loan loan) {
         if (!loanStaffService.existByModel(loan)) {
             throw new LoanExistException("Loan not exist");
         }
-        Loan returnLoan = loanStaffService.returnLoan(loan);
+        loanStaffService.returnLoan(loan);
 
         return ResponseEntity.status(HttpStatus.OK).build();
 

@@ -13,7 +13,7 @@ import java.security.Principal;
 //@RibbonClient(name = "microservice-user")
 
 
-@FeignClient(name = "microservice-user", configuration = AccountClientConfiguration.class)
+@FeignClient(name = "microservice-user")
 public interface MicroserviceUserProxy {
 
     @RequestMapping(value = "/uaa/users/current", method = RequestMethod.GET)

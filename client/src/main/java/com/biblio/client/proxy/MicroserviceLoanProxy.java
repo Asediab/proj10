@@ -14,12 +14,12 @@ import java.util.List;
 //@RibbonClient(name = "microservice-loan")
 
 
-@FeignClient(name = "microservice-loan", configuration = AccountClientConfiguration.class)
+@FeignClient(name = "microservice-loan")
 public interface MicroserviceLoanProxy {
 
-    @GetMapping(value = "/microservice-loan/loans/{userId}")
+    @GetMapping(value = "/loans/{userId}")
     List<LoanDTO> listLoansByUser(@PathVariable("userId") Long userId);
 
-    @PutMapping(value = "/microservice-loan/loans/prolongateLoan/{loanID}")
+    @PutMapping(value = "/loans/prolongateLoan/{loanID}")
     ResponseEntity<Void> prolongateLoanPeriod(@PathVariable("loanID") Long loanID);
 }

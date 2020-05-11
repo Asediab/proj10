@@ -14,7 +14,7 @@ import java.util.Collections;
 public class UserServiceImpl implements UserService {
 
 
-    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @Autowired
     private UserDAO repository;
@@ -25,18 +25,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void create(User user) {
+    public User create(User user) {
 
         User existing = repository.findByEmail(user.getEmail());
-        if (existing == null) {
-            throw new IllegalArgumentException("user already exists: " + existing.getUsername());
+        if (existing != null) {
+            throw new IllegalArgumentException("User already exists: " + user.getEmail());
         }
 
         String hash = encoder.encode(user.getPassword());
         user.setPassword(hash);
         user.setRoles(Collections.singleton(Role.USER));
 
-        repository.save(user);
+        return repository.save(user);
     }
 
     @Override

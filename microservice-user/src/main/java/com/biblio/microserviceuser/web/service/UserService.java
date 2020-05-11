@@ -4,7 +4,7 @@ import com.biblio.microserviceuser.model.User;
 
 public interface UserService {
 
-    void create(User user);
+    User create(User user);
 
     User findByEmail(String email);
 

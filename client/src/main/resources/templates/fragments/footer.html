@@ -1,0 +1,22 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+</head>
+<body>
+<div th:fragment="footer">
+
+    <footer class="footer mt-auto py-3 fixed-bottom">
+        <div class="container">
+            © 2020 Escalade.fr
+            <span sec:authorize="isAuthenticated()">| Logged user: <span sec:authentication="name"></span>
+            </span>
+
+
+        </div>
+    </footer>
+
+
+</div>
+</body>
+</html>

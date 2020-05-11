@@ -19,11 +19,10 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 @EnableAuthorizationServer
 public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
-    private TokenStore tokenStore = new InMemoryTokenStore();
+    private final TokenStore tokenStore = new InMemoryTokenStore();
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @Autowired
-    @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
     @Qualifier("userDetailsServiceImpl")
@@ -38,33 +37,19 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 
         clients.inMemory()
                 .withClient("browser")
+                .secret(encoder.encode(env.getProperty("SERVER_PASSWORD")))
                 .authorizedGrantTypes("refresh_token", "password")
                 .scopes("ui")
+                .autoApprove(true)
                 .and()
-                .withClient("microservice-document")
-                .secret(encoder.encode(env.getProperty("DOCUMENT_SERVER_PASSWORD")))
-                .authorizedGrantTypes("client_credentials", "refresh_token")
-                .scopes("server")
-                .and()
-                .withClient("microservice-loan")
-                .secret(encoder.encode(env.getProperty("DOCUMENT_SERVER_PASSWORD")))
-                .authorizedGrantTypes("client_credentials", "refresh_token")
-                .scopes("server")
-                .and()
-                .withClient("microservice-client")
-                .secret(encoder.encode(env.getProperty("DOCUMENT_SERVER_PASSWORD")))
-                .authorizedGrantTypes("client_credentials", "refresh_token")
-                .scopes("server")
-                .and()
-                .withClient("microservice-batch")
-                .secret(encoder.encode(env.getProperty("DOCUMENT_SERVER_PASSWORD")))
+                .withClient("microservice")
+                .secret(encoder.encode(env.getProperty("SERVER_PASSWORD")))
                 .authorizedGrantTypes("client_credentials", "refresh_token")
                 .scopes("server");
-        // @formatter:on
     }
 
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+    public void configure(final AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
                 .tokenStore(tokenStore)
                 .authenticationManager(authenticationManager)
@@ -72,7 +57,7 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
     }
 
     @Override
-    public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
+    public void configure(final AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
         oauthServer
                 .tokenKeyAccess("permitAll()")
                 .checkTokenAccess("isAuthenticated()")
