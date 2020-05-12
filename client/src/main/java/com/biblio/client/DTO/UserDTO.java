@@ -13,7 +13,7 @@ public class UserDTO {
     private Set<Role> roles;
     private Date dateCreation;
     private Date dateModified;
-    private String libraryCardNumber;
+
 
     public UserDTO() {
     }
@@ -82,14 +82,6 @@ public class UserDTO {
         this.dateModified = dateModified;
     }
 
-    public String getLibraryCardNumber() {
-        return libraryCardNumber;
-    }
-
-    public void setLibraryCardNumber(String libraryCardNumber) {
-        this.libraryCardNumber = libraryCardNumber;
-    }
-
     @Override
     public String toString() {
         return "UserDTO{" +
@@ -101,7 +93,6 @@ public class UserDTO {
                 ", roles=" + roles +
                 ", dateCreation=" + dateCreation +
                 ", dateModified=" + dateModified +
-                ", libraryCardNumber='" + libraryCardNumber + '\'' +
                 '}';
     }
 }

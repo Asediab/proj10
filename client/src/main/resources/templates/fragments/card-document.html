@@ -9,7 +9,8 @@
             <div class="card border-dark m-1 ">
                 <div class="row no-gutters">
                     <div class="col-md-4">
-                        <img src="http://localhost:9092/image/?name=tempperdu" class="card-img" alt="...">
+                        <img th:src="@{'http://localhost:9095/image/?name=' + ${document.photo}}" class="card-img"
+                             alt="...">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">

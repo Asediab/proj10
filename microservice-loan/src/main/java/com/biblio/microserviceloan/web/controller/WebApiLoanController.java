@@ -7,7 +7,6 @@ import com.biblio.microserviceloan.web.exceptions.ProlongateLoanPeriodException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -21,7 +20,7 @@ public class WebApiLoanController {
     @Autowired
     private LoanWebService loanWebService;
 
-    @PreAuthorize("#hasRole('USER')")
+//    @PreAuthorize("#hasRole('USER')")
     @GetMapping(value = "/loans/{userId}")
     public List<Loan> listLoansByUser(@PathVariable("userId") Long userId) throws LoansNotFoundException {
         List<Loan> loanList = loanWebService.findByUserIdAndReturnedIsFalseOrderByDateCreationAsc(userId);
@@ -32,7 +31,7 @@ public class WebApiLoanController {
     }
 
 
-    @PreAuthorize("#hasRole('USER')")
+    //    @PreAuthorize("#hasRole('USER')")
     @PutMapping(value = "/loans/prolongateLoan/{loanID}")
     public ResponseEntity<Void> prolongateLoanPeriod(@PathVariable("loanID") Long loanID) {
         Loan loanProlongate = loanWebService.getOne(loanID);

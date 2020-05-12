@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 
+import java.util.Collections;
 import java.util.List;
 
 
@@ -14,7 +15,7 @@ import java.util.List;
 //@RibbonClient(name = "microservice-loan")
 
 
-@FeignClient(name = "microservice-loan")
+@FeignClient(name = "microservice-loan", fallback = MicroserviceLoanProxy.LoanFallback.class)
 public interface MicroserviceLoanProxy {
 
     @GetMapping(value = "/loans/{userId}")
@@ -22,4 +23,18 @@ public interface MicroserviceLoanProxy {
 
     @PutMapping(value = "/loans/prolongateLoan/{loanID}")
     ResponseEntity<Void> prolongateLoanPeriod(@PathVariable("loanID") Long loanID);
+
+
+    class LoanFallback implements MicroserviceLoanProxy {
+
+        @Override
+        public List<LoanDTO> listLoansByUser(Long userId) {
+            return Collections.emptyList();
+        }
+
+        @Override
+        public ResponseEntity<Void> prolongateLoanPeriod(Long loanID) {
+            return null;
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package com.biblio.microserviceuser.web.service.impl;
 
 import com.biblio.microserviceuser.DAO.UserDAO;
+import com.biblio.microserviceuser.DTO.UserDTO;
 import com.biblio.microserviceuser.model.Role;
 import com.biblio.microserviceuser.model.User;
 import com.biblio.microserviceuser.web.service.UserService;
@@ -25,18 +26,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User create(User user) {
+    public User create(UserDTO user) {
 
-        User existing = repository.findByEmail(user.getEmail());
-        if (existing != null) {
+        if (repository.findByEmail(user.getEmail()) != null) {
             throw new IllegalArgumentException("User already exists: " + user.getEmail());
         }
+        User userSave = new User();
+        userSave.setName(user.getName());
+        userSave.setSurname(user.getSurname());
+        userSave.setEmail(user.getEmail());
+        userSave.setPassword(encoder.encode(user.getPassword()));
+        userSave.setRoles(Collections.singleton(Role.USER));
 
-        String hash = encoder.encode(user.getPassword());
-        user.setPassword(hash);
-        user.setRoles(Collections.singleton(Role.USER));
-
-        return repository.save(user);
+        return repository.save(userSave);
     }
 
     @Override

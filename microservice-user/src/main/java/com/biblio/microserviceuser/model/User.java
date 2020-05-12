@@ -1,5 +1,6 @@
 package com.biblio.microserviceuser.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -19,6 +20,7 @@ public class User implements UserDetails {
     private String name;
     private String surname;
 
+    @JsonIgnore
     private String password;
 
     @Column(unique = true)

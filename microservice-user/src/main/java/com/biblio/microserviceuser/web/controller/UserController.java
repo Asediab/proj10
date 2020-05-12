@@ -1,11 +1,11 @@
 package com.biblio.microserviceuser.web.controller;
 
+import com.biblio.microserviceuser.DTO.UserDTO;
 import com.biblio.microserviceuser.model.User;
 import com.biblio.microserviceuser.web.exceptions.UserNotFoundException;
 import com.biblio.microserviceuser.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,12 +19,12 @@ public class UserController {
     private UserService userService;
 
     @GetMapping(value = "/current")
-    public Principal getUser(@AuthenticationPrincipal Principal principal) {
+    public Principal getUser(Principal principal) {
         return principal;
     }
 
     @PostMapping
-    public ResponseEntity<Void> createUser(@Valid @RequestBody User user) {
+    public ResponseEntity<Void> createUser(@Valid @RequestBody UserDTO user) {
         User userSave = userService.create(user);
         if (userSave == null) {
             return ResponseEntity.noContent().build();

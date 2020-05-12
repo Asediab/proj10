@@ -19,7 +19,10 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 @EnableAuthorizationServer
 public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
+
     private final TokenStore tokenStore = new InMemoryTokenStore();
+
+
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @Autowired
@@ -40,12 +43,12 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
                 .secret(encoder.encode(env.getProperty("SERVER_PASSWORD")))
                 .authorizedGrantTypes("refresh_token", "password")
                 .scopes("ui")
-                .autoApprove(true)
                 .and()
                 .withClient("microservice")
                 .secret(encoder.encode(env.getProperty("SERVER_PASSWORD")))
-                .authorizedGrantTypes("client_credentials", "refresh_token")
-                .scopes("server");
+                .authorizedGrantTypes("authorization_code", "client_credentials", "refresh_token", "password")
+                .scopes("server")
+                .autoApprove(true);
     }
 
     @Override
@@ -61,7 +64,8 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
         oauthServer
                 .tokenKeyAccess("permitAll()")
                 .checkTokenAccess("isAuthenticated()")
-                .passwordEncoder(encoder);
+                .passwordEncoder(encoder)
+                .allowFormAuthenticationForClients();
     }
 
 }
