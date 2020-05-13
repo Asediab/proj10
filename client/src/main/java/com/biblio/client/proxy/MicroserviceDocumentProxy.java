@@ -14,7 +14,7 @@ import java.util.List;
 //@RibbonClient(name = "microservice-document")
 
 
-@FeignClient(name = "microservice-document", fallback = MicroserviceDocumentProxy.DocumentFallback.class)
+@FeignClient(name = "microservice-document", fallback = MicroserviceDocumentProxy.DocumentFallback.class, configuration = AccountClientConfiguration.class)
 public interface MicroserviceDocumentProxy {
 
     @GetMapping(value = "/documents/")

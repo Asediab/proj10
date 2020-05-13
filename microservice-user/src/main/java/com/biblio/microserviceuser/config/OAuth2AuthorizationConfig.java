@@ -46,9 +46,16 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
                 .and()
                 .withClient("microservice")
                 .secret(encoder.encode(env.getProperty("SERVER_PASSWORD")))
-                .authorizedGrantTypes("client_credentials", "refresh_token", "password")
+                .authorizedGrantTypes("client_credentials", "refresh_token")
                 .scopes("server")
-                .autoApprove(true);
+                .and()
+                .withClient("microservice2")
+                .secret(encoder.encode(env.getProperty("SERVER_PASSWORD")))
+                .authorizedGrantTypes("authorization_code")
+                .scopes("server")
+                .autoApprove(true)
+                .redirectUris("http://localhost:9099/login");
+        ;
     }
 
     @Override
@@ -64,8 +71,7 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
         oauthServer
                 .tokenKeyAccess("permitAll()")
                 .checkTokenAccess("isAuthenticated()")
-                .passwordEncoder(encoder)
-                .allowFormAuthenticationForClients();
+                .passwordEncoder(encoder);
     }
 
 }

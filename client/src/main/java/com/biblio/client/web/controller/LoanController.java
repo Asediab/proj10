@@ -23,6 +23,8 @@ public class LoanController {
     @GetMapping("/loans")
     public String userLoans(Model model, Principal principal,
                             @PageableDefault(size = 10) Pageable pageable) {
+
+        principal.getName();
         Page<LoanDTO> page = loanService.loansByUser(pageable, 3L);
         model.addAttribute("listLoans", page);
 
