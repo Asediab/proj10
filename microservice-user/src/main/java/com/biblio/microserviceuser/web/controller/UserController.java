@@ -6,6 +6,7 @@ import com.biblio.microserviceuser.web.exceptions.UserNotFoundException;
 import com.biblio.microserviceuser.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,7 +20,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping(value = "/current")
-    public Principal getUser(Principal principal) {
+    public Principal getUser(@AuthenticationPrincipal Principal principal) {
         return principal;
     }
 

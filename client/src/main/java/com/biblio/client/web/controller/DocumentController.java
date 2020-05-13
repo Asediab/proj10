@@ -28,7 +28,7 @@ public class DocumentController {
         Page<DocumentDTO> page = documentService.getDocuments(pageable, author, title);
         model.addAttribute("documents", page);
         model.addAttribute("url", "/?author=" + author + "&title=" + title);
-        model.addAttribute("numberOfPages", 1);
+        model.addAttribute("numberOfPages", page.getTotalPages());
         return "documents";
     }
 }

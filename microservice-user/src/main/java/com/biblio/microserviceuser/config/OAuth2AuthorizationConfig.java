@@ -46,7 +46,7 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
                 .and()
                 .withClient("microservice")
                 .secret(encoder.encode(env.getProperty("SERVER_PASSWORD")))
-                .authorizedGrantTypes("authorization_code", "client_credentials", "refresh_token", "password")
+                .authorizedGrantTypes("client_credentials", "refresh_token", "password")
                 .scopes("server")
                 .autoApprove(true);
     }

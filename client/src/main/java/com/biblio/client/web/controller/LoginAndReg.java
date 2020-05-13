@@ -33,7 +33,7 @@ public class LoginAndReg {
         userProxy.createUser(userRegister);
 
 
-        return "redirect:/signup?success";
+        return "redirect:/registration?success";
     }
 
     @GetMapping("/registration")
