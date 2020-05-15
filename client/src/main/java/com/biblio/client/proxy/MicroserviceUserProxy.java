@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.validation.Valid;
 import java.security.Principal;
 
-//@FeignClient(name = "zuul-server")
-//@RibbonClient(name = "microservice-user")
-
 
 @FeignClient(name = "microservice-user", fallback = MicroserviceUserProxy.UserFallback.class)
 public interface MicroserviceUserProxy {

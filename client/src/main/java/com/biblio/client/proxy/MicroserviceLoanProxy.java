@@ -11,10 +11,6 @@ import java.util.Collections;
 import java.util.List;
 
 
-//@FeignClient(name = "zuul-server")
-//@RibbonClient(name = "microservice-loan")
-
-
 @FeignClient(name = "microservice-loan", fallback = MicroserviceLoanProxy.LoanFallback.class)
 public interface MicroserviceLoanProxy {
 
@@ -23,6 +19,8 @@ public interface MicroserviceLoanProxy {
 
     @PutMapping(value = "/loans/prolongateLoan/{loanID}")
     ResponseEntity<Void> prolongateLoanPeriod(@PathVariable("loanID") Long loanID);
+
+
 
 
     class LoanFallback implements MicroserviceLoanProxy {

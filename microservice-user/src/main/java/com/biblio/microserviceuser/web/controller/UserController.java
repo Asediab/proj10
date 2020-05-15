@@ -6,9 +6,12 @@ import com.biblio.microserviceuser.web.exceptions.UserNotFoundException;
 import com.biblio.microserviceuser.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 
@@ -17,11 +20,15 @@ import java.security.Principal;
 public class UserController {
 
     @Autowired
+    private TokenStore tokenStore;
+
+    @Autowired
     private UserService userService;
 
     @GetMapping(value = "/current")
-    public Principal getUser(@AuthenticationPrincipal Principal principal) {
-        return principal;
+    public Principal getUser(OAuth2Authentication principal) {
+
+        return principal.getUserAuthentication();
     }
 
     @PostMapping
@@ -42,4 +49,18 @@ public class UserController {
         }
         return user;
     }
+
+    @RequestMapping(value="/logout", method= RequestMethod.POST)
+    @ResponseBody
+    public void logMeOut(HttpServletRequest request) {
+        String  token = (String) request.getAttribute("OAuth2AuthenticationDetails.ACCESS_TOKEN_VALUE");
+        if (token != null) {
+            OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(token);
+            if (oAuth2AccessToken != null) {
+                tokenStore.removeAccessToken(oAuth2AccessToken);
+            }
+            tokenStore.readAccessToken(token);
+        }
+    }
+
 }

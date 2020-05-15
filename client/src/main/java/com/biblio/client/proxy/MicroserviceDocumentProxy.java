@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Collections;
 import java.util.List;
 
-//@FeignClient(name = "zuul-server")
-//@RibbonClient(name = "microservice-document")
-
 
 @FeignClient(name = "microservice-document", fallback = MicroserviceDocumentProxy.DocumentFallback.class, configuration = AccountClientConfiguration.class)
 public interface MicroserviceDocumentProxy {
@@ -26,6 +23,8 @@ public interface MicroserviceDocumentProxy {
 
     @GetMapping(value = "/documents/{idCopyDoc}")
     CopyOfDocumentDTO getDocumentByID(@PathVariable("idCopyDoc") Long docCopyID);
+
+
 
 
     class DocumentFallback implements MicroserviceDocumentProxy {

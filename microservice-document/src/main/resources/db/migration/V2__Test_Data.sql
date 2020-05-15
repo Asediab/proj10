@@ -5,11 +5,18 @@ VALUES (2, 'Magazine');
 INSERT INTO public.type_of_document (id, type)
 VALUES (3, 'Newspaper');
 
+SELECT pg_catalog.setval('type_of_document_id_seq', 4, true);
+
+
+
 
 INSERT INTO public.library (id, name, address, description, telephone)
 VALUES (1, 'Bibliothèque Mazarine', '23 Quai de Conti, Paris, Île-de-France, 75006, France',
         'With a grandiose façade and luminous reading room, it’s hard to believe that the Bibliotheque Mazarine is often overlooked by tourists making their way across the Seine and into the St-Germain-des-Prés. The oldest public library in France, it has a modern collection focusing on French history from the 12th–17th centuries, as well as thousands of rare, medieval manuscripts.',
         '+33144414406');
+
+SELECT pg_catalog.setval('library_id_seq', 2, true);
+
 
 
 INSERT INTO public.document (id, author, copy_available, number_of_pages, titre, year_os_issue, type_of_document_id,
@@ -24,6 +31,10 @@ INSERT INTO public.document (id, author, copy_available, number_of_pages, titre,
                              photo, description)
 VALUES (3, 'Marcel Proust', 4, 320, 'Jean Santeuil', '1995-10-20', 1, 'jean_santeuil',
         'Jean Santeuil is an unfinished novel written by Marcel Proust. It was written between 1896 and 1900, and published after the author''s death. The first French edition was published in 1952 by Gallimard.');
+
+SELECT pg_catalog.setval('document_id_seq', 4, true);
+
+
 
 
 INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id)
@@ -49,3 +60,4 @@ VALUES (10, 44588833993, 3, 1);
 INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id)
 VALUES (11, 41255996474, 3, 1);
 
+SELECT pg_catalog.setval('copy_of_document_id_seq', 12, true);
