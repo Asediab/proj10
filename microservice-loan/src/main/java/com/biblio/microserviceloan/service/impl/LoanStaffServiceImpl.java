@@ -34,6 +34,7 @@ public class LoanStaffServiceImpl implements LoanStaffService {
             newLoan.setNumberOfRenewals(0);
             newLoan.setReturned(Boolean.FALSE);
             return loanDAO.save(newLoan);
+
         }
         return null;
 

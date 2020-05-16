@@ -9,7 +9,7 @@ import org.springframework.web.context.request.RequestContextListener;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients("com.biblio.client")
+@EnableFeignClients("com.biblio.client.proxy")
 public class ClientApplication {
 
     @Bean

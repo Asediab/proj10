@@ -23,12 +23,12 @@ public class DocumentController {
     public String documents(@RequestParam(name = "author", required = false, defaultValue = "") String author,
                             @RequestParam(name = "title", required = false, defaultValue = "") String title,
                             Model model,
-                            @PageableDefault(size = 5) Pageable pageable) {
+                            @PageableDefault(size = 10) Pageable pageable) {
 
         Page<DocumentDTO> page = documentService.getDocuments(pageable, author, title);
         model.addAttribute("documents", page);
         model.addAttribute("url", "/?author=" + author + "&title=" + title);
-        model.addAttribute("numberOfPages", 1);
+        model.addAttribute("numberOfPages", page.getTotalPages());
         return "documents";
     }
 }

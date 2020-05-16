@@ -2,6 +2,7 @@ package com.biblio.microserviceuser.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,11 +20,16 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 @EnableAuthorizationServer
 public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
-    private TokenStore tokenStore = new InMemoryTokenStore();
+
+    @Bean
+    public TokenStore tokenStore() {
+        return new InMemoryTokenStore();
+    }
+
+
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @Autowired
-    @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
     @Qualifier("userDetailsServiceImpl")
@@ -39,25 +45,31 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
         clients.inMemory()
                 .withClient("browser")
                 .secret(encoder.encode(env.getProperty("SERVER_PASSWORD")))
-                .authorizedGrantTypes("refresh_token", "password")
+                .authorizedGrantTypes("refresh_token", "password", "authorization_code")
                 .scopes("ui")
+                .autoApprove(true)
+                .redirectUris("http://localhost:9099/login")
                 .and()
                 .withClient("microservice")
                 .secret(encoder.encode(env.getProperty("SERVER_PASSWORD")))
                 .authorizedGrantTypes("client_credentials", "refresh_token")
-                .scopes("server");// @formatter:on
+                .scopes("server")
+                .and()
+                .withClient("microservice2")
+                .secret(encoder.encode(env.getProperty("SERVER_PASSWORD")))
+                .authorizedGrantTypes("authorization_code");
     }
 
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+    public void configure(final AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
-                .tokenStore(tokenStore)
+                .tokenStore(tokenStore())
                 .authenticationManager(authenticationManager)
                 .userDetailsService(userDetailsService);
     }
 
     @Override
-    public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
+    public void configure(final AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
         oauthServer
                 .tokenKeyAccess("permitAll()")
                 .checkTokenAccess("isAuthenticated()")

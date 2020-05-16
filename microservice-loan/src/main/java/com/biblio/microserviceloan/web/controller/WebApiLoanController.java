@@ -20,7 +20,7 @@ public class WebApiLoanController {
     @Autowired
     private LoanWebService loanWebService;
 
-
+//    @PreAuthorize("#hasRole('USER')")
     @GetMapping(value = "/loans/{userId}")
     public List<Loan> listLoansByUser(@PathVariable("userId") Long userId) throws LoansNotFoundException {
         List<Loan> loanList = loanWebService.findByUserIdAndReturnedIsFalseOrderByDateCreationAsc(userId);
@@ -30,6 +30,8 @@ public class WebApiLoanController {
         return loanList;
     }
 
+
+    //    @PreAuthorize("#hasRole('USER')")
     @PutMapping(value = "/loans/prolongateLoan/{loanID}")
     public ResponseEntity<Void> prolongateLoanPeriod(@PathVariable("loanID") Long loanID) {
         Loan loanProlongate = loanWebService.getOne(loanID);

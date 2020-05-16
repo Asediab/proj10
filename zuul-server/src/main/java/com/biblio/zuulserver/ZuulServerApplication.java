@@ -14,18 +14,4 @@ public class ZuulServerApplication {
         SpringApplication.run(ZuulServerApplication.class, args);
     }
 
-
-//    @Bean
-//    UserInfoRestTemplateCustomizer userInfoRestTemplateCustomizer(LoadBalancerInterceptor loadBalancerInterceptor) {
-//        return template -> {
-//            List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
-//            interceptors.add(loadBalancerInterceptor);
-//            AccessTokenProviderChain accessTokenProviderChain = Stream
-//                    .of(new AuthorizationCodeAccessTokenProvider(), new ImplicitAccessTokenProvider(),
-//                            new ResourceOwnerPasswordAccessTokenProvider(), new ClientCredentialsAccessTokenProvider())
-//                    .peek(tp -> tp.setInterceptors(interceptors))
-//                    .collect(Collectors.collectingAndThen(Collectors.toList(), AccessTokenProviderChain::new));
-//            template.setAccessTokenProvider(accessTokenProviderChain);
-//        };
-//    }
 }
