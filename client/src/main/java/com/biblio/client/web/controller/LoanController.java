@@ -30,6 +30,8 @@ public class LoanController {
        long userId = (int) map.get("id");
         Page<LoanDTO> page = loanService.loansByUser(pageable, userId);
         model.addAttribute("listLoans", page);
+        model.addAttribute("url", "/");
+        model.addAttribute("numberOfPages", page.getTotalPages());
 
         return "loans";
     }

@@ -14,7 +14,7 @@
                        th:utext="${numberOfPage}"></a>
                 </li>
                 <li th:if="${numberOfPage -1 != pageable.number}" class="page-item">
-                    <a class="page-link" th:href="@{${url}(page=${numberOfPage}-1, size=${pageable.size})}"
+                    <a class="page-link" th:href="@{${url}(page=${numberOfPage}-1)}"
                        tabindex="-1"
                        th:utext="${numberOfPage}"></a>
                 </li>

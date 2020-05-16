@@ -51,6 +51,9 @@
             </th:block>
             </tbody>
         </table>
+
+        <div th:if="${listLoans.numberOfElements > 1}"
+             th:replace="fragments/pagination :: pagination-pages(${numberOfPages}, ${listLoans}, ${url})"></div>
     </div>
 </main>
 
