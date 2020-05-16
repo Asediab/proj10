@@ -19,8 +19,8 @@ public class AccountClientConfiguration {
 
     private OAuth2ProtectedResourceDetails resource() {
         ResourceOwnerPasswordResourceDetails resourceDetails = new ResourceOwnerPasswordResourceDetails();
-        resourceDetails.setAccessTokenUri("http://microservice-user/uaa/oauth/token");
-        resourceDetails.setClientId("microservice-batch");
+        resourceDetails.setAccessTokenUri("http://localhost:9096/uaa/oauth/token");
+        resourceDetails.setClientId("microservice");
         resourceDetails.setGrantType("client_credentials");
         resourceDetails.setScope(Arrays.asList("server"));
         resourceDetails.setClientSecret("password");
