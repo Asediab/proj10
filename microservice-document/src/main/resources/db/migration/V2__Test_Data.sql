@@ -21,15 +21,15 @@ SELECT pg_catalog.setval('library_id_seq', 2, true);
 
 INSERT INTO public.document (id, author, copy_available, number_of_pages, titre, year_os_issue, type_of_document_id,
                              photo, description)
-VALUES (1, 'Marcel Proust', 4, 350, 'À la recherche du temps perdu', '1995-04-25', 1, 'tempperdu',
+VALUES (1, 'Marcel Proust', 0, 350, 'À la recherche du temps perdu', '1995-04-25', 1, 'tempperdu',
         'À la recherche du temps perdu, couramment évoqué plus simplement sous le titre La Recherche, est un roman de Marcel Proust, écrit de 1906 à 1922 et publié de 1913 à 1927 en sept tomes, dont les trois derniers parurent après la mort de lauteur');
 INSERT INTO public.document (id, author, copy_available, number_of_pages, titre, year_os_issue, type_of_document_id,
                              photo, description)
-VALUES (2, 'Marcel Proust', 3, 180, 'Les Plaisirs et les Jours', '2000-04-25', 1, 'plaisirs_les_jours',
+VALUES (2, 'Marcel Proust', 0, 180, 'Les Plaisirs et les Jours', '2000-04-25', 1, 'plaisirs_les_jours',
         'Les Plaisirs et les Jours is a collection of prose poems and novellas by Marcel Proust. It was first published in 1896 by Calmann-Lévy, and was Proust''s first publication.');
 INSERT INTO public.document (id, author, copy_available, number_of_pages, titre, year_os_issue, type_of_document_id,
                              photo, description)
-VALUES (3, 'Marcel Proust', 4, 320, 'Jean Santeuil', '1995-10-20', 1, 'jean_santeuil',
+VALUES (3, 'Marcel Proust', 2, 320, 'Jean Santeuil', '1995-10-20', 1, 'jean_santeuil',
         'Jean Santeuil is an unfinished novel written by Marcel Proust. It was written between 1896 and 1900, and published after the author''s death. The first French edition was published in 1952 by Gallimard.');
 
 SELECT pg_catalog.setval('document_id_seq', 4, true);
@@ -37,27 +37,27 @@ SELECT pg_catalog.setval('document_id_seq', 4, true);
 
 
 
-INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id)
-VALUES (1, 65412398745, 1, 1);
-INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id)
-VALUES (2, 78691489672, 1, 1);
-INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id)
-VALUES (3, 77858533398, 1, 1);
-INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id)
-VALUES (4, 12278272782, 1, 1);
-INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id)
-VALUES (5, 22937937517, 2, 1);
-INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id)
-VALUES (6, 17283737582, 2, 1);
-INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id)
-VALUES (7, 44267895257, 2, 1);
-INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id)
-VALUES (8, 82772785767, 3, 1);
-INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id)
-VALUES (9, 74125628965, 3, 1);
-INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id)
-VALUES (10, 44588833993, 3, 1);
-INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id)
-VALUES (11, 41255996474, 3, 1);
+INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id, available)
+VALUES (1, 65412398745, 1, 1, false);
+INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id, available)
+VALUES (2, 78691489672, 1, 1, false);
+INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id, available)
+VALUES (3, 77858533398, 1, 1, false);
+INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id, available)
+VALUES (4, 12278272782, 1, 1, false);
+INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id, available)
+VALUES (5, 22937937517, 2, 1, false);
+INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id, available)
+VALUES (6, 17283737582, 2, 1, false);
+INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id, available)
+VALUES (7, 44267895257, 2, 1, false);
+INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id, available)
+VALUES (8, 82772785767, 3, 1, false);
+INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id, available)
+VALUES (9, 74125628965, 3, 1, false);
+INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id, available)
+VALUES (10, 44588833993, 3, 1, true);
+INSERT INTO public.copy_of_document (id, serial_number, document_id, library_id, available)
+VALUES (11, 41255996474, 3, 1, true);
 
 SELECT pg_catalog.setval('copy_of_document_id_seq', 12, true);

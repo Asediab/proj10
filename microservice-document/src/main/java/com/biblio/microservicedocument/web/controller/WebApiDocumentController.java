@@ -7,11 +7,11 @@ import com.biblio.microservicedocument.service.DocumentService;
 import com.biblio.microservicedocument.web.exceptions.DocumentsNotFoundException;
 import com.biblio.microservicedocument.web.exceptions.SearchOptionsException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -52,5 +52,29 @@ public class WebApiDocumentController {
             throw new DocumentsNotFoundException("Wrong CopyOfDocumentID");
         }
         return doc;
+    }
+
+
+
+    @PutMapping(value = "/documents/api")
+    public ResponseEntity<Void> returnDoc(@RequestBody @Valid CopyOfDocument copyOfDocument) {
+        if (copyOfDocumentService.getById(copyOfDocument.getId())==null) {
+            throw new DocumentsNotFoundException("CopyOfDocument not exist");
+        }
+        copyOfDocument.setAvailable(Boolean.TRUE);
+        copyOfDocumentService.refreshNumbrAvailableDoc(copyOfDocument.getDocument());
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @DeleteMapping(value = "/documents/api")
+    public ResponseEntity<Void> loanDoc(@RequestBody @Valid CopyOfDocument copyOfDocument) {
+        if (copyOfDocumentService.getById(copyOfDocument.getId())==null) {
+            throw new DocumentsNotFoundException("CopyOfDocument not exist");
+        }
+        copyOfDocument.setAvailable(Boolean.FALSE);
+        copyOfDocumentService.refreshNumbrAvailableDoc(copyOfDocument.getDocument());
+
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

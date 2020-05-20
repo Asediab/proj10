@@ -4,6 +4,7 @@ create table copy_of_document
     serial_number int8      not null,
     document_id   int8      not null,
     library_id    int8      not null,
+    available     boolean   not null,
     primary key (id)
 );
 

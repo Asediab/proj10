@@ -24,6 +24,8 @@ public class CopyOfDocument {
     @JoinColumn(name = "library_id", nullable = false)
     private Library library;
 
+    private boolean available;
+
     public CopyOfDocument() {
     }
 
@@ -60,6 +62,14 @@ public class CopyOfDocument {
         this.library = library;
     }
 
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
     @Override
     public String toString() {
         return "CopyOfDocument{" +
@@ -67,6 +77,7 @@ public class CopyOfDocument {
                 ", document=" + document +
                 ", serialNumber=" + serialNumber +
                 ", library=" + library +
+                ", available=" + available +
                 '}';
     }
 }

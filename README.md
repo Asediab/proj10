@@ -91,7 +91,7 @@ La procédure est la suivante :
 ## Jeu de donné de démo
 Les utilisateurs enregistrés dans la base de données.
 
-Email :`user@user.com` Mot de pass :`user`
+Email :`ocr.proj7@yandex.ru` Mot de pass :`user`
  
 Email :`user2@user.com` Mot de pass :`user`
 
