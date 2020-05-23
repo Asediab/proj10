@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -36,27 +35,25 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @Autowired
-    private Environment env;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
         clients.inMemory()
                 .withClient("browser")
-                .secret(encoder.encode(env.getProperty("SERVER_PASSWORD")))
+                .secret(encoder.encode("password"))
                 .authorizedGrantTypes("refresh_token", "password", "authorization_code")
                 .scopes("ui")
                 .autoApprove(true)
                 .redirectUris("http://localhost:9099/login")
                 .and()
                 .withClient("microservice")
-                .secret(encoder.encode(env.getProperty("SERVER_PASSWORD")))
+                .secret(encoder.encode("password"))
                 .authorizedGrantTypes("client_credentials", "refresh_token")
                 .scopes("server")
                 .and()
                 .withClient("microservice2")
-                .secret(encoder.encode(env.getProperty("SERVER_PASSWORD")))
+                .secret(encoder.encode("password"))
                 .authorizedGrantTypes("authorization_code");
     }
 

@@ -63,7 +63,19 @@ Ces données sont présentes dans le fichier _NOM_DE_MICROSERVICE/src/main/resou
       
 ### Configuration du module "microservice-batch"
 Le service doit être configuré pour pouvoir envoyer des lettres électroniques.
-Pour ce faire, modifiez les lignes commençant par _spring.mail._ dans le fichier _config-server/src/main/resources/shared/microservice-batch.properties_
+Pour ce faire, modifiez les lignes 
+
+ _spring.mail.host=_
+ 
+ _spring.mail.username=_
+ 
+ _spring.mail.password=_
+ 
+ _spring.mail.port=_
+ 
+ _spring.mail.protocol=_
+ 
+ dans le fichier _config-server/src/main/resources/shared/microservice-batch.properties_
 
 
 ##  Déploiement 

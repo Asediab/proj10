@@ -37,13 +37,13 @@
 
     <modules>
         <module>config-server</module>
+        <module>eureka-server</module>
+        <module>zuul-server</module>
         <module>microservice-document</module>
         <module>microservice-fileserver</module>
         <module>microservice-loan</module>
         <module>microservice-user</module>
         <module>client</module>
-        <module>zuul-server</module>
-        <module>eureka-server</module>
         <module>microservice-batch</module>
     </modules>
 </project>
