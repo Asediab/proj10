@@ -11,4 +11,8 @@ public interface DocumentService {
     List<Document> findAll();
 
     Document getOne(Long id);
+
+    Document addReservation(Long docId);
+
+    Document deleteReservation(Long docId);
 }

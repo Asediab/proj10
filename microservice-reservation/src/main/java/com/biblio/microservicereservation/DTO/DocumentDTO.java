@@ -1,66 +1,28 @@
-package com.biblio.microservicedocument.model;
+package com.biblio.microservicereservation.DTO;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 import java.time.LocalDate;
-import java.util.List;
 
-@Entity
-public class Document {
+public class DocumentDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "typeOfDocument_id", nullable = false)
-    private TypeOfDocument typeOfDocument;
+    private TypeOfDocumentDTO typeOfDocument;
 
-    @NotNull
-    @Column(nullable = false)
     private LocalDate yearOsIssue;
 
-    @NotNull
-    @Column(nullable = false)
     private String titre;
 
-    @Positive
-    @Column(nullable = false)
     private int numberOfPages;
 
-    @NotBlank
-    @Column(nullable = false)
     private String author;
 
-    @Column(nullable = false)
     private int copyAvailable;
 
-    @Column(nullable = false)
     private String photo;
 
-    @Column(nullable = false)
     private String description;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "document", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<CopyOfDocument> copyOfDocumentList;
-
-    @Column(nullable = false)
-    private int reservations;
-
-    public Document() {
-    }
-
-    public int getReservations() {
-        return reservations;
-    }
-
-    public void setReservations(int reservations) {
-        this.reservations = reservations;
+    public DocumentDTO() {
     }
 
     public Long getId() {
@@ -71,11 +33,11 @@ public class Document {
         this.id = id;
     }
 
-    public TypeOfDocument getTypeOfDocument() {
+    public TypeOfDocumentDTO getTypeOfDocument() {
         return typeOfDocument;
     }
 
-    public void setTypeOfDocument(TypeOfDocument typeOfDocument) {
+    public void setTypeOfDocument(TypeOfDocumentDTO typeOfDocument) {
         this.typeOfDocument = typeOfDocument;
     }
 
@@ -111,14 +73,6 @@ public class Document {
         this.author = author;
     }
 
-    public List<CopyOfDocument> getCopyOfDocumentList() {
-        return copyOfDocumentList;
-    }
-
-    public void setCopyOfDocumentList(List<CopyOfDocument> copyOfDocumentList) {
-        this.copyOfDocumentList = copyOfDocumentList;
-    }
-
     public int getCopyAvailable() {
         return copyAvailable;
     }
@@ -145,7 +99,7 @@ public class Document {
 
     @Override
     public String toString() {
-        return "Document{" +
+        return "DocumentDTO{" +
                 "id=" + id +
                 ", typeOfDocument=" + typeOfDocument +
                 ", yearOsIssue=" + yearOsIssue +
@@ -155,8 +109,6 @@ public class Document {
                 ", copyAvailable=" + copyAvailable +
                 ", photo='" + photo + '\'' +
                 ", description='" + description + '\'' +
-                ", copyOfDocumentList=" + copyOfDocumentList +
-                ", reservations=" + reservations +
                 '}';
     }
 }

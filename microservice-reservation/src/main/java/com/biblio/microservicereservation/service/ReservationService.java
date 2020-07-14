@@ -12,4 +12,8 @@ public interface ReservationService {
     Reservation saveNew(Reservation newReservation);
 
     boolean reservationExist(Reservation reservation);
+
+    long countReservationsByDocumentId (Long documentId);
+
+    boolean isReservationPossible (Long documentId);
 }

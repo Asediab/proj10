@@ -22,11 +22,16 @@ public class ReservationController {
 
     @PostMapping(value = "/reservation/add")
     public ResponseEntity<Void> addReservation(@RequestBody @Valid Reservation reservation) {
-        Reservation newReservation = reservationService.saveNew(reservation);
-        if (newReservation == null) {
-            throw new ReservationExistException("Reservation exist");
+
+        if (reservationService.isReservationPossible(reservation.getDocumentId())){
+            Reservation newReservation = reservationService.saveNew(reservation);
+            if (newReservation == null) {
+                throw new ReservationExistException("Reservation exist");
+            }
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } else {
+            throw new ReservationExistException("Reservation not possible, limit exceeded");
         }
-        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping(value = "/reservation/delete")

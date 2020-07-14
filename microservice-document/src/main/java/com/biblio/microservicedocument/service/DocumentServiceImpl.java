@@ -37,4 +37,20 @@ public class DocumentServiceImpl implements DocumentService {
     public Document getOne(Long id) {
         return documentDAO.getOne(id);
     }
+
+    @Override
+    public Document addReservation(Long docId) {
+        Document doc = documentDAO.getOne(docId);
+        doc.setReservations(doc.getReservations() + 1);
+        documentDAO.save(doc);
+        return doc;
+    }
+
+    @Override
+    public Document deleteReservation(Long docId) {
+        Document doc = documentDAO.getOne(docId);
+        doc.setReservations(doc.getReservations() - 1);
+        documentDAO.save(doc);
+        return doc;
+    }
 }

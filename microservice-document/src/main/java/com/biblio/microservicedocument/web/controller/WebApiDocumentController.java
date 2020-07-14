@@ -54,6 +54,15 @@ public class WebApiDocumentController {
         return doc;
     }
 
+    @GetMapping(value = "/documents/API/{idDoc}")
+    public Document getDocByID(@PathVariable("idDoc") Long docID) throws SearchOptionsException {
+        Document doc = documentService.getOne(docID);
+        if (doc == null) {
+            throw new DocumentsNotFoundException("Wrong DocumentID");
+        }
+        return doc;
+    }
+
 
 
     @PutMapping(value = "/documents/api")
@@ -75,6 +84,22 @@ public class WebApiDocumentController {
         copyOfDocument.setAvailable(Boolean.FALSE);
         copyOfDocumentService.refreshNumbrAvailableDoc(copyOfDocument.getDocument());
 
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PutMapping(value = "/documents/API/addReservation/{idDoc}")
+    public ResponseEntity<Void> addReservation(@PathVariable("idDoc") Long docID) {
+        if (documentService.addReservation(docID) == null) {
+            throw new DocumentsNotFoundException("Document not exist");
+        }
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @DeleteMapping(value = "/documents/API/deleteReservation/{idDoc}")
+    public ResponseEntity<Void> deteleReservation(@PathVariable("idDoc") Long docID) {
+        if (documentService.deleteReservation(docID)==null) {
+            throw new DocumentsNotFoundException("Document not exist");
+        }
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
