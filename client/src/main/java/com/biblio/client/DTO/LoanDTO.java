@@ -22,6 +22,8 @@ public class LoanDTO {
 
     private boolean returned;
 
+    private Long documentId;
+
     public LoanDTO() {
     }
 
@@ -97,16 +99,27 @@ public class LoanDTO {
         this.returned = returned;
     }
 
+    public Long getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(Long documentId) {
+        this.documentId = documentId;
+    }
+
     @Override
     public String toString() {
         return "LoanDTO{" +
                 "id=" + id +
                 ", userId=" + userId +
+                ", user=" + user +
                 ", copyOfDocumentId=" + copyOfDocumentId +
+                ", copyOfDocumentDTO=" + copyOfDocumentDTO +
                 ", numberOfRenewals=" + numberOfRenewals +
                 ", dateCreation=" + dateCreation +
                 ", dateExpiration=" + dateExpiration +
                 ", returned=" + returned +
+                ", documentId=" + documentId +
                 '}';
     }
 }

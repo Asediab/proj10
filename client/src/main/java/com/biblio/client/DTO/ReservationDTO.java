@@ -1,32 +1,24 @@
-package com.biblio.microservicereservation.model;
+package com.biblio.client.DTO;
 
-import javax.persistence.*;
-import javax.validation.constraints.Positive;
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import java.time.LocalDate;
 
-@Entity
-public class Reservation {
+public class ReservationDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Positive
-    @Column(nullable = false)
     private Long documentId;
 
+    @JsonIgnore
     private LocalDate dateCreation;
 
     private LocalDate dateExpiration;
 
-    @Positive
-    @Column(nullable = false)
     private Long userId;
 
-    @Column(nullable = false)
     private String userName;
 
-    @Column(nullable = false)
     private String userSurname;
 
     private boolean isActive;
@@ -39,11 +31,13 @@ public class Reservation {
 
     private LocalDate mailExpirationDate;
 
-    @Column(nullable = false)
     private String documentName;
 
+    @JsonIgnore
+    private LocalDate dateReturn;
 
-    public Reservation() {
+
+    public ReservationDTO() {
     }
 
     public Long getId() {
@@ -148,6 +142,14 @@ public class Reservation {
 
     public void setDocumentName(String documentName) {
         this.documentName = documentName;
+    }
+
+    public LocalDate getDateReturn() {
+        return dateReturn;
+    }
+
+    public void setDateReturn(LocalDate dateReturn) {
+        this.dateReturn = dateReturn;
     }
 
     @Override

@@ -44,4 +44,13 @@ public class WebApiLoanController {
             throw new ProlongateLoanPeriodException("Loan cannot be prolonged twice");
         }
     }
+
+    @GetMapping(value = "/loans/documentId/{documentId}")
+    public List<Loan> listLoansByDocumentId(@PathVariable("documentId") Long documentId) throws LoansNotFoundException {
+        List<Loan> loanList = loanWebService.findByDocumentIdAndSortByDateExpirationAsc(documentId);
+        if (loanList.isEmpty()) {
+            throw new LoansNotFoundException("Invalid documentId or no loans for this document");
+        }
+        return loanList;
+    }
 }

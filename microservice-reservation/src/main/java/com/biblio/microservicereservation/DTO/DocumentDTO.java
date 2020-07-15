@@ -22,6 +22,10 @@ public class DocumentDTO {
 
     private String description;
 
+    private int reservations;
+
+    private int copyTotal;
+
     public DocumentDTO() {
     }
 
@@ -97,6 +101,22 @@ public class DocumentDTO {
         this.description = description;
     }
 
+    public int getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(int reservations) {
+        this.reservations = reservations;
+    }
+
+    public int getCopyTotal() {
+        return copyTotal;
+    }
+
+    public void setCopyTotal(int copyTotal) {
+        this.copyTotal = copyTotal;
+    }
+
     @Override
     public String toString() {
         return "DocumentDTO{" +
@@ -109,6 +129,8 @@ public class DocumentDTO {
                 ", copyAvailable=" + copyAvailable +
                 ", photo='" + photo + '\'' +
                 ", description='" + description + '\'' +
+                ", reservations=" + reservations +
+                ", copyTotal=" + copyTotal +
                 '}';
     }
 }

@@ -13,6 +13,7 @@ create table document
     id                  bigserial     not null,
     author              varchar(255)  not null,
     copy_available      int4          not null,
+    copy_total          int4          not null,
     reservations        int4          not null,
     number_of_pages     int4          not null,
     titre               varchar(255)  not null,

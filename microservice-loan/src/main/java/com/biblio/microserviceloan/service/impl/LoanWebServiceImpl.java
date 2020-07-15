@@ -35,4 +35,9 @@ public class LoanWebServiceImpl implements LoanWebService {
         }
         return false;
     }
+
+    @Override
+    public List<Loan> findByDocumentIdAndSortByDateExpirationAsc(Long documentId) {
+        return loanDAO.findByDocumentIdOrderByDateExpirationAsc(documentId);
+    }
 }

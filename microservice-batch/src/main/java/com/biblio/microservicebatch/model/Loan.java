@@ -23,6 +23,8 @@ public class Loan implements Serializable {
 
     private boolean returned;
 
+    private Long documentId;
+
     public Loan() {
     }
 
@@ -98,6 +100,14 @@ public class Loan implements Serializable {
         this.returned = returned;
     }
 
+    public Long getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(Long documentId) {
+        this.documentId = documentId;
+    }
+
     @Override
     public String toString() {
         return "Loan{" +
@@ -110,6 +120,7 @@ public class Loan implements Serializable {
                 ", dateCreation=" + dateCreation +
                 ", dateExpiration=" + dateExpiration +
                 ", returned=" + returned +
+                ", documentId=" + documentId +
                 '}';
     }
 }

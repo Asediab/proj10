@@ -52,6 +52,9 @@ public class Document {
     @Column(nullable = false)
     private int reservations;
 
+    @Column(nullable = false)
+    private int copyTotal;
+
     public Document() {
     }
 
@@ -143,6 +146,14 @@ public class Document {
         this.description = description;
     }
 
+    public int getCopyTotal() {
+        return copyTotal;
+    }
+
+    public void setCopyTotal(int copyTotal) {
+        this.copyTotal = copyTotal;
+    }
+
     @Override
     public String toString() {
         return "Document{" +
@@ -157,6 +168,7 @@ public class Document {
                 ", description='" + description + '\'' +
                 ", copyOfDocumentList=" + copyOfDocumentList +
                 ", reservations=" + reservations +
+                ", copyTotal=" + copyTotal +
                 '}';
     }
 }

@@ -12,5 +12,7 @@ public interface LoanWebService {
 
     boolean modifyDateExpiration(Loan loan);
 
+    List<Loan> findByDocumentIdAndSortByDateExpirationAsc(Long documentId);
+
 
 }

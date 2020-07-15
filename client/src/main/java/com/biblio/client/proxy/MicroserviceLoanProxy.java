@@ -20,6 +20,11 @@ public interface MicroserviceLoanProxy {
     @PutMapping(value = "/loans/prolongateLoan/{loanID}")
     ResponseEntity<Void> prolongateLoanPeriod(@PathVariable("loanID") Long loanID);
 
+    @GetMapping(value = "/loans/documentId/{documentId}")
+    List<LoanDTO> listLoansByDocumentId(@PathVariable("documentId") Long documentId);
+
+
+
 
 
 
@@ -33,6 +38,11 @@ public interface MicroserviceLoanProxy {
         @Override
         public ResponseEntity<Void> prolongateLoanPeriod(Long loanID) {
             return null;
+        }
+
+        @Override
+        public List<LoanDTO> listLoansByDocumentId(Long documentId) {
+            return Collections.emptyList();
         }
     }
 }

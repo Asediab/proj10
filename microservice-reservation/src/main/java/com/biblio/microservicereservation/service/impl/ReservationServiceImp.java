@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class ReservationServiceImp implements ReservationService {
@@ -26,16 +27,16 @@ public class ReservationServiceImp implements ReservationService {
 
     @Override
     public void delete(Reservation reservation) {
-        if (reservationDAO.existsByActiveIsTrueAndDocumentIdAndUserId(reservation.getDocumentId(), reservation.getUserId())) {
+        if (reservationDAO.existsByIsActiveTrueAndDocumentIdAndUserId(reservation.getDocumentId(), reservation.getUserId())) {
             documentProxy.deteleReservation(reservation.getDocumentId());
             reservation.setActive(Boolean.FALSE);
-            reservationDAO.save(reservation);
+//            reservationDAO.save(reservation);
         }
     }
 
     @Override
     public Reservation saveNew(Reservation newReservation) {
-        if (!reservationDAO.existsByActiveIsTrueAndDocumentIdAndUserId(newReservation.getDocumentId(), newReservation.getUserId())) {
+        if (!reservationDAO.existsByIsActiveTrueAndDocumentIdAndUserId(newReservation.getDocumentId(), newReservation.getUserId())) {
             documentProxy.addReservation(newReservation.getDocumentId());
             newReservation.setActive(Boolean.TRUE);
             newReservation.setMailSent(Boolean.FALSE);
@@ -48,22 +49,37 @@ public class ReservationServiceImp implements ReservationService {
 
     @Override
     public boolean reservationExist(Reservation reservation) {
-        return reservationDAO.existsByActiveIsTrueAndDocumentIdAndUserId(reservation.getDocumentId(), reservation.getUserId());
+        return reservationDAO.existsByIsActiveTrueAndDocumentIdAndUserId(reservation.getDocumentId(), reservation.getUserId());
     }
 
     @Override
     public long countReservationsByDocumentId(Long documentId) {
-        return reservationDAO.countReservationByDocumentIdAndActiveIsTrue(documentId);
+        return reservationDAO.countReservationByDocumentIdAndIsActiveTrue(documentId);
     }
 
     @Override
     public boolean isReservationPossible(Long documentId) {
         long reservationCount = countReservationsByDocumentId(documentId);
         DocumentDTO doc = documentProxy.getDocumentByID(documentId);
-        int resMax = doc.getCopyAvailable() * 2;
+        int resMax = doc.getCopyTotal() * 2;
         if(reservationCount < resMax){
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<Reservation> getReservationsByUserId(Long userId) {
+        return reservationDAO.findByUserIdAndIsActiveTrue(userId);
+    }
+
+    @Override
+    public List<Reservation> getReservationsByDocumentId(Long documentId) {
+        return reservationDAO.findByDocumentIdAndIsActiveTrue(documentId);
+    }
+
+    @Override
+    public Reservation getOneActive(Long id) {
+        return reservationDAO.findByIdAndIsActiveTrue(id);
     }
 }

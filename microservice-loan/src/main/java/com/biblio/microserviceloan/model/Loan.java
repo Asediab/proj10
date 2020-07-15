@@ -19,6 +19,10 @@ public class Loan {
     @Column(nullable = false)
     private Long copyOfDocumentId;
 
+    @Positive
+    @Column(nullable = false)
+    private Long documentId;
+
     @Column(nullable = false)
     private int numberOfRenewals;
 
@@ -90,12 +94,21 @@ public class Loan {
         this.returned = returned;
     }
 
+    public Long getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(Long documentId) {
+        this.documentId = documentId;
+    }
+
     @Override
     public String toString() {
         return "Loan{" +
                 "id=" + id +
                 ", userId=" + userId +
                 ", copyOfDocumentId=" + copyOfDocumentId +
+                ", documentId=" + documentId +
                 ", numberOfRenewals=" + numberOfRenewals +
                 ", dateCreation=" + dateCreation +
                 ", dateExpiration=" + dateExpiration +
