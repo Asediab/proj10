@@ -1,8 +1,9 @@
 package com.biblio.microservicereservation.DTO;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class DocumentDTO {
+public class DocumentDTO implements Serializable {
 
     private Long id;
 

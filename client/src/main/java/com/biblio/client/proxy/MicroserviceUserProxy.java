@@ -2,6 +2,7 @@ package com.biblio.client.proxy;
 
 import com.biblio.client.DTO.UserRegister;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +21,7 @@ public interface MicroserviceUserProxy {
     void createUser(@Valid @RequestBody UserRegister user);
 
 
+    @Component
     class UserFallback implements MicroserviceUserProxy {
 
         @Override

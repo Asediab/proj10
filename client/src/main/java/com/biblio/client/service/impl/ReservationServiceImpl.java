@@ -6,6 +6,7 @@ import com.biblio.client.proxy.MicroserviceReservationProxy;
 import com.biblio.client.service.LoanService;
 import com.biblio.client.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +32,7 @@ public class ReservationServiceImpl implements ReservationService {
         for (ReservationDTO reservation : reservationDTOList) {
             LoanDTO loanDTO = loanService.dateExpirationLoanByDocumentId(reservation.getDocumentId());
             reservation.setDateReturn(loanDTO.getDateExpiration());
+            reservation.setListPosition(getPositionReservationByDocument(reservation.getDocumentId(), reservation.getId()));
         }
 
         int start = (int) pageable.getOffset();
@@ -41,24 +43,43 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public void addReservation(ReservationDTO reservation) {
-        reservationProxy.addReservation(reservation);
+    public void addReservation(Long documentId, String documentName, OAuth2Authentication principal) {
+        ReservationDTO newReservation = this.makeNewReservation(documentId, documentName, principal);
+        reservationProxy.addReservation(newReservation);
     }
 
     @Override
     public void deleteReservation(Long reservationId, OAuth2Authentication principal, String documentName, Long documentId) {
+        ReservationDTO newReservation = this.makeNewReservation(documentId, documentName, principal);
+        newReservation.setId(reservationId);
+        reservationProxy.deleteReservation(newReservation);
+    }
+
+    private int getPositionReservationByDocument(Long documentId, Long reservationId) {
+        List<ReservationDTO> reservationDTOList = reservationProxy.getByDocumentId(documentId);
+
+        int positionReservation = 0;
+        for (int i = 0 ; i <= reservationDTOList.size() - 1; i++) {
+            if (reservationDTOList.get(i).getId().equals(reservationId)){
+                positionReservation = i;
+                break;
+            }
+        }
+        return positionReservation + 1;
+    }
+
+    private ReservationDTO makeNewReservation (Long documentId, String documentName, OAuth2Authentication principal) {
         LinkedHashMap map = (LinkedHashMap) principal.getUserAuthentication().getDetails();
         map = (LinkedHashMap) map.get("principal");
         long userId = (int) map.get("id");
         String userName = (String) map.get("name");
         String userSurname = (String) map.get("surname");
         ReservationDTO newReservation = new ReservationDTO();
-        newReservation.setId(reservationId);
         newReservation.setUserId(userId);
         newReservation.setUserName(userName);
         newReservation.setUserSurname(userSurname);
         newReservation.setDocumentName(documentName);
         newReservation.setDocumentId(documentId);
-        reservationProxy.deleteReservation(newReservation);
+        return newReservation;
     }
 }

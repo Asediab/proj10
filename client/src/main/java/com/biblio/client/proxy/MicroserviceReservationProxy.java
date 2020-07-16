@@ -3,6 +3,7 @@ package com.biblio.client.proxy;
 import com.biblio.client.DTO.ReservationDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -20,7 +21,11 @@ public interface MicroserviceReservationProxy {
     @GetMapping(value = "/reservation/byUser/{userId}")
     List<ReservationDTO> getByUserId (@PathVariable("userId") Long userId);
 
+    @GetMapping(value = "/reservation/byDocument/{documentId}")
+    List<ReservationDTO> getByDocumentId (@PathVariable("documentId") Long documentId);
 
+
+    @Component
     class ReservationFallback implements MicroserviceReservationProxy {
 
         @Override
@@ -35,6 +40,11 @@ public interface MicroserviceReservationProxy {
 
         @Override
         public List<ReservationDTO> getByUserId(Long userId) {
+            return Collections.emptyList();
+        }
+
+        @Override
+        public List<ReservationDTO> getByDocumentId(Long documentId) {
             return Collections.emptyList();
         }
     }

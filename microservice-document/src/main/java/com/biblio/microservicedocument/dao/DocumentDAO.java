@@ -13,6 +13,7 @@ public interface DocumentDAO extends JpaRepository<Document, Long>, QuerydslPred
 
     List<Document> findAll();
 
+
     Page<Document> findAll(Pageable pageable);
 
 }

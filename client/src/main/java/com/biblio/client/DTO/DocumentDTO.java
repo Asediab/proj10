@@ -1,8 +1,11 @@
 package com.biblio.client.DTO;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class DocumentDTO {
+public class DocumentDTO implements Serializable {
 
     private Long id;
 
@@ -25,6 +28,13 @@ public class DocumentDTO {
     private int reservations;
 
     private int copyTotal;
+
+    @JsonIgnore
+    private LocalDate expectedReturnDate;
+
+    @JsonIgnore
+    private boolean isUserHaveLoanOfDoc;
+
 
     public DocumentDTO() {
     }
@@ -115,6 +125,22 @@ public class DocumentDTO {
 
     public void setCopyTotal(int copyTotal) {
         this.copyTotal = copyTotal;
+    }
+
+    public LocalDate getExpectedReturnDate() {
+        return expectedReturnDate;
+    }
+
+    public void setExpectedReturnDate(LocalDate expectedReturnDate) {
+        this.expectedReturnDate = expectedReturnDate;
+    }
+
+    public boolean isUserHaveLoanOfDoc() {
+        return isUserHaveLoanOfDoc;
+    }
+
+    public void setUserHaveLoanOfDoc(boolean userHaveLoanOfDoc) {
+        isUserHaveLoanOfDoc = userHaveLoanOfDoc;
     }
 
     @Override

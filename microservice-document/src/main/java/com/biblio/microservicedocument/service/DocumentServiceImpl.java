@@ -53,4 +53,9 @@ public class DocumentServiceImpl implements DocumentService {
         documentDAO.save(doc);
         return doc;
     }
+
+    @Override
+    public Document findById(Long id) {
+        return documentDAO.findById(id).orElse(null);
+    }
 }

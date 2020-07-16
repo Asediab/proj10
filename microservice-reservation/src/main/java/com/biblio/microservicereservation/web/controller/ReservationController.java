@@ -20,7 +20,7 @@ public class ReservationController {
     private ReservationService reservationService;
 
     @PostMapping(value = "/reservation/add")
-    public ResponseEntity<Void> addReservation(@RequestBody @Valid Reservation reservation) {
+    public ResponseEntity<Void> addReservation(@RequestBody Reservation reservation) {
 
         if (reservationService.isReservationPossible(reservation.getDocumentId())){
             Reservation newReservation = reservationService.saveNew(reservation);
@@ -48,6 +48,15 @@ public class ReservationController {
         List<Reservation> reservationList = reservationService.getReservationsByUserId(userId);
         if (reservationList.isEmpty()) {
             throw new ReservationsNotFoundException("Invalid userID or no reservations for this user");
+        }
+        return reservationList;
+    }
+
+    @GetMapping(value = "/reservation/byDocument/{documentId}")
+    public List<Reservation> getByDocumentId (@PathVariable("documentId") Long documentId) throws ReservationsNotFoundException {
+        List<Reservation> reservationList = reservationService.getReservationsByDocumentId(documentId);
+        if (reservationList.isEmpty()) {
+            throw new ReservationsNotFoundException("Invalid DocumentID or no reservations for this document");
         }
         return reservationList;
     }

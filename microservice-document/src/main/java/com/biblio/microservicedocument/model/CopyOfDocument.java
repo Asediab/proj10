@@ -4,9 +4,10 @@ import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
+import java.io.Serializable;
 
 @Entity
-public class CopyOfDocument {
+public class CopyOfDocument implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

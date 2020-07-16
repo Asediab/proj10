@@ -1,16 +1,20 @@
 package com.biblio.microservicedocument.model;
 
+
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-public class Document {
+public class Document implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

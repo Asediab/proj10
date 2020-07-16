@@ -1,8 +1,9 @@
 package com.biblio.client.DTO;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class LoanDTO {
+public class LoanDTO implements Serializable {
 
     private Long id;
 

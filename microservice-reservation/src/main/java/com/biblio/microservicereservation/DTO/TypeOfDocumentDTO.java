@@ -1,6 +1,8 @@
 package com.biblio.microservicereservation.DTO;
 
-public class TypeOfDocumentDTO {
+import java.io.Serializable;
+
+public class TypeOfDocumentDTO implements Serializable {
 
     private Long id;
 

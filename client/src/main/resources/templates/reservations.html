@@ -31,7 +31,7 @@
                 <tr>
                     <th th:utext="${reservation.documentName}" scope="row"></th>
                     <td th:utext="${#temporals.format(reservation.dateReturn)}"></td>
-                    <td >TODO</td>
+                    <td th:utext="${reservation.listPosition}"></td>
                     <td>
                         <form class="col mt-1" method="post" th:action="@{/reservations}">
                             <label>

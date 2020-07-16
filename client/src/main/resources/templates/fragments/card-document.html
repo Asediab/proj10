@@ -45,6 +45,39 @@
                                     <p class="col" th:utext="${document.copyAvailable}"></p>
                                 </div>
                             </li>
+                            <th:block th:if="${document.copyAvailable == 0}" sec:authorize="isAuthenticated()">
+                                <li class="list-group-item ">
+                                    <div class="row">
+                                        <p class="col">Expected return date:</p>
+                                        <p class="col" th:utext="${document.expectedReturnDate}"></p>
+                                    </div>
+                                </li>
+                                <li class="list-group-item ">
+                                    <div class="row">
+                                        <p class="col">Number of reservations:</p>
+                                        <p class="col" th:utext="${document.reservations}"></p>
+                                    </div>
+                                </li>
+                                <li class="list-group-item " th:if="${(document.copyTotal * 2) > document.reservations and !document.isUserHaveLoanOfDoc()}">
+                                    <div class="row">
+                                        <p class="col">Make a reservation:</p>
+                                        <p class="col" >
+                                        <form class="col mt-1" method="post" th:action="@{/addReservations}">
+                                            <label>
+                                                <input name="documentId" th:value="${document.id}" readonly
+                                                       hidden="hidden">
+                                            </label>
+                                            <label>
+                                                <input name="documentName" th:value="${document.titre}" readonly
+                                                       hidden="hidden">
+                                            </label>
+
+                                            <button class="btn btn-primary" type="submit">Reserve</button>
+                                        </form>
+                                        </p>
+                                    </div>
+                                </li>
+                            </th:block>
                         </ul>
                     </div>
                 </div>

@@ -28,15 +28,16 @@ public class ReservationServiceImp implements ReservationService {
     @Override
     public void delete(Reservation reservation) {
         if (reservationDAO.existsByIsActiveTrueAndDocumentIdAndUserId(reservation.getDocumentId(), reservation.getUserId())) {
-            documentProxy.deteleReservation(reservation.getDocumentId());
+            documentProxy.deleteReservation(reservation.getDocumentId());
             reservation.setActive(Boolean.FALSE);
-//            reservationDAO.save(reservation);
+            reservationDAO.save(reservation);
         }
     }
 
     @Override
     public Reservation saveNew(Reservation newReservation) {
         if (!reservationDAO.existsByIsActiveTrueAndDocumentIdAndUserId(newReservation.getDocumentId(), newReservation.getUserId())) {
+
             documentProxy.addReservation(newReservation.getDocumentId());
             newReservation.setActive(Boolean.TRUE);
             newReservation.setMailSent(Boolean.FALSE);
@@ -75,7 +76,7 @@ public class ReservationServiceImp implements ReservationService {
 
     @Override
     public List<Reservation> getReservationsByDocumentId(Long documentId) {
-        return reservationDAO.findByDocumentIdAndIsActiveTrue(documentId);
+        return reservationDAO.findByDocumentIdAndIsActiveTrueOrderByDateCreationDesc(documentId);
     }
 
     @Override

@@ -1,9 +1,10 @@
 package com.biblio.client.DTO;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-public class UserDTO {
+public class UserDTO implements Serializable {
 
     private Long id;
     private String name;

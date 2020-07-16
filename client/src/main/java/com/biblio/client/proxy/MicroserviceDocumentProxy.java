@@ -3,6 +3,7 @@ package com.biblio.client.proxy;
 import com.biblio.client.DTO.CopyOfDocumentDTO;
 import com.biblio.client.DTO.DocumentDTO;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,8 +28,8 @@ public interface MicroserviceDocumentProxy {
 
 
 
+    @Component
     class DocumentFallback implements MicroserviceDocumentProxy {
-
 
         @Override
         public List<DocumentDTO> listDocuments() {

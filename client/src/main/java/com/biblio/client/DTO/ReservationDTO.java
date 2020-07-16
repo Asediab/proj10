@@ -2,15 +2,15 @@ package com.biblio.client.DTO;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class ReservationDTO {
+public class ReservationDTO implements Serializable {
 
     private Long id;
 
     private Long documentId;
-
-    @JsonIgnore
+    
     private LocalDate dateCreation;
 
     private LocalDate dateExpiration;
@@ -35,6 +35,9 @@ public class ReservationDTO {
 
     @JsonIgnore
     private LocalDate dateReturn;
+
+    @JsonIgnore
+    private int listPosition;
 
 
     public ReservationDTO() {
@@ -150,6 +153,14 @@ public class ReservationDTO {
 
     public void setDateReturn(LocalDate dateReturn) {
         this.dateReturn = dateReturn;
+    }
+
+    public int getListPosition() {
+        return listPosition;
+    }
+
+    public void setListPosition(int listPosition) {
+        this.listPosition = listPosition;
     }
 
     @Override

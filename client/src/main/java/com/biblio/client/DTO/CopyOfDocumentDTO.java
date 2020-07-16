@@ -1,7 +1,9 @@
 package com.biblio.client.DTO;
 
 
-public class CopyOfDocumentDTO {
+import java.io.Serializable;
+
+public class CopyOfDocumentDTO implements Serializable {
 
     private Long id;
 

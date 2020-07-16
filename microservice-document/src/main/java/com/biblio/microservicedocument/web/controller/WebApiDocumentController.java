@@ -56,7 +56,7 @@ public class WebApiDocumentController {
 
     @GetMapping(value = "/documents/API/{idDoc}")
     public Document getDocByID(@PathVariable("idDoc") Long docID) throws SearchOptionsException {
-        Document doc = documentService.getOne(docID);
+        Document doc = documentService.findById(docID);
         if (doc == null) {
             throw new DocumentsNotFoundException("Wrong DocumentID");
         }
@@ -96,7 +96,7 @@ public class WebApiDocumentController {
     }
 
     @DeleteMapping(value = "/documents/API/deleteReservation/{idDoc}")
-    public ResponseEntity<Void> deteleReservation(@PathVariable("idDoc") Long docID) {
+    public ResponseEntity<Void> deleteReservation(@PathVariable("idDoc") Long docID) {
         if (documentService.deleteReservation(docID)==null) {
             throw new DocumentsNotFoundException("Document not exist");
         }

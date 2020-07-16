@@ -16,7 +16,7 @@ public interface MicroserviceDocumentProxy {
     ResponseEntity<Void> addReservation(@PathVariable("idDoc") Long docID);
 
     @DeleteMapping(value = "/documents/API/deleteReservation/{idDoc}")
-    ResponseEntity<Void> deteleReservation(@PathVariable("idDoc") Long docID);
+    ResponseEntity<Void> deleteReservation(@PathVariable("idDoc") Long docID);
 
 
 
@@ -34,7 +34,7 @@ public interface MicroserviceDocumentProxy {
         }
 
         @Override
-        public ResponseEntity<Void> deteleReservation(Long docID) {
+        public ResponseEntity<Void> deleteReservation(Long docID) {
             return null;
         }
     }

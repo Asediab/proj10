@@ -1,6 +1,8 @@
 package com.biblio.client.DTO;
 
-public class LibraryDTO {
+import java.io.Serializable;
+
+public class LibraryDTO implements Serializable {
 
     private Long id;
 
