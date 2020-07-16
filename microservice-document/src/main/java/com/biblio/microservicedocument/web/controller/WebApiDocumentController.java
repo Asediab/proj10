@@ -102,4 +102,20 @@ public class WebApiDocumentController {
         }
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @PutMapping(value = "/documents/API/addCopyAvailable/{idDoc}")
+    public ResponseEntity<Void> addCopyAvailable(@PathVariable("idDoc") Long docID) {
+        if (documentService.addCopyAvailable(docID) == null) {
+            throw new DocumentsNotFoundException("Document not exist");
+        }
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @DeleteMapping(value = "/documents/API/deleteCopyAvailable/{idDoc}")
+    public ResponseEntity<Void> deleteCopyAvailable(@PathVariable("idDoc") Long docID) {
+        if (documentService.deleteCopyAvailable(docID)==null) {
+            throw new DocumentsNotFoundException("Document not exist");
+        }
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

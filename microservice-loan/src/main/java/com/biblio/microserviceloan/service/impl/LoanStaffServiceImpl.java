@@ -2,6 +2,7 @@ package com.biblio.microserviceloan.service.impl;
 
 import com.biblio.microserviceloan.dao.LoanDAO;
 import com.biblio.microserviceloan.model.Loan;
+import com.biblio.microserviceloan.proxy.MicroserviceDocumentProxy;
 import com.biblio.microserviceloan.service.LoanStaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -16,6 +17,9 @@ public class LoanStaffServiceImpl implements LoanStaffService {
     @Autowired
     private LoanDAO loanDAO;
 
+    @Autowired
+    private MicroserviceDocumentProxy documentProxy;
+
     @Override
     public Loan getOne(Long id) {
         return loanDAO.getOne(id);
@@ -23,6 +27,7 @@ public class LoanStaffServiceImpl implements LoanStaffService {
 
     @Override
     public void delete(Loan loan) {
+        documentProxy.addCopyAvailable(loan.getDocumentId());
         loanDAO.delete(loan);
     }
 
@@ -33,8 +38,8 @@ public class LoanStaffServiceImpl implements LoanStaffService {
             newLoan.setDateExpiration(newLoan.getDateCreation().plusMonths(1));
             newLoan.setNumberOfRenewals(0);
             newLoan.setReturned(Boolean.FALSE);
+            documentProxy.deleteCopyAvailable(newLoan.getDocumentId());
             return loanDAO.save(newLoan);
-
         }
         return null;
 

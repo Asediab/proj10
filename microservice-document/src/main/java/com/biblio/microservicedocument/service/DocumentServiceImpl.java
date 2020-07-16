@@ -58,4 +58,20 @@ public class DocumentServiceImpl implements DocumentService {
     public Document findById(Long id) {
         return documentDAO.findById(id).orElse(null);
     }
+
+    @Override
+    public Document addCopyAvailable(Long docId) {
+        Document doc = documentDAO.getOne(docId);
+        doc.setCopyAvailable(doc.getCopyAvailable() + 1);
+        documentDAO.save(doc);
+        return doc;
+    }
+
+    @Override
+    public Document deleteCopyAvailable(Long docId) {
+        Document doc = documentDAO.getOne(docId);
+        doc.setCopyAvailable(doc.getCopyAvailable() - 1);
+        documentDAO.save(doc);
+        return doc;
+    }
 }

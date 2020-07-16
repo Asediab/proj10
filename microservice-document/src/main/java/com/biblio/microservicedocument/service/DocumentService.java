@@ -17,4 +17,8 @@ public interface DocumentService {
     Document addReservation(Long docId);
 
     Document deleteReservation(Long docId);
+
+    Document addCopyAvailable(Long docId);
+
+    Document deleteCopyAvailable(Long docId);
 }
