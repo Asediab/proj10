@@ -24,7 +24,7 @@ public class ReservationController {
 
     @GetMapping("/reservations")
     public String userReservations(Model model, OAuth2Authentication principal,
-                            @PageableDefault(size = 10) Pageable pageable) {
+                                   @PageableDefault(size = 10) Pageable pageable) {
 
         LinkedHashMap map = (LinkedHashMap) principal.getUserAuthentication().getDetails();
         map = (LinkedHashMap) map.get("principal");
@@ -39,19 +39,19 @@ public class ReservationController {
 
     @PostMapping("/reservations")
     public String deleteReservation(@RequestParam("reservationId") Long reservation,
-                              @RequestParam("documentName") String documentName,
-                              @RequestParam("documentId") Long documentId,
-                              OAuth2Authentication principal,
-                              Model model) {
+                                    @RequestParam("documentName") String documentName,
+                                    @RequestParam("documentId") Long documentId,
+                                    OAuth2Authentication principal,
+                                    Model model) {
         reservationService.deleteReservation(reservation, principal, documentName, documentId);
         return "redirect:/reservations";
     }
 
     @PostMapping("/addReservations")
     public String addReservation(@RequestParam("documentId") Long documentId,
-                                    @RequestParam("documentName") String documentName,
-                                    OAuth2Authentication principal,
-                                    Model model) {
+                                 @RequestParam("documentName") String documentName,
+                                 OAuth2Authentication principal,
+                                 Model model) {
         reservationService.addReservation(documentId, documentName, principal);
         return "redirect:/reservations";
     }

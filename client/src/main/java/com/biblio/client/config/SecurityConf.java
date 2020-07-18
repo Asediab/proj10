@@ -20,11 +20,11 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
         http
 
                 .authorizeRequests()
-                .antMatchers("/login**","/logout**", "/", "/static/css/**", "/static/js/**", "/registration**").permitAll()
+                .antMatchers("/login**", "/logout**", "/", "/static/css/**", "/static/js/**", "/registration**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout()
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .addLogoutHandler(myLogoutHandler);
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .addLogoutHandler(myLogoutHandler);
     }
 }

@@ -26,8 +26,6 @@ public interface MicroserviceDocumentProxy {
     CopyOfDocumentDTO getDocumentByID(@PathVariable("idCopyDoc") Long docCopyID);
 
 
-
-
     @Component
     class DocumentFallback implements MicroserviceDocumentProxy {
 

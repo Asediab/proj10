@@ -10,7 +10,7 @@ public class ReservationDTO implements Serializable {
     private Long id;
 
     private Long documentId;
-    
+
     private LocalDate dateCreation;
 
     private LocalDate dateExpiration;
@@ -20,6 +20,8 @@ public class ReservationDTO implements Serializable {
     private String userName;
 
     private String userSurname;
+
+    private String userEmail;
 
     private boolean isActive;
 
@@ -163,6 +165,14 @@ public class ReservationDTO implements Serializable {
         this.listPosition = listPosition;
     }
 
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
     @Override
     public String toString() {
         return "Reservation{" +
@@ -173,6 +183,7 @@ public class ReservationDTO implements Serializable {
                 ", userId=" + userId +
                 ", userName='" + userName + '\'' +
                 ", userSurname='" + userSurname + '\'' +
+                ", userEmail='" + userEmail + '\'' +
                 ", isActive=" + isActive +
                 ", isMailSent=" + isMailSent +
                 ", isTakenByUser=" + isTakenByUser +

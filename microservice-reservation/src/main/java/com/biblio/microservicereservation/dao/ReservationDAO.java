@@ -1,7 +1,6 @@
 package com.biblio.microservicereservation.dao;
 
 
-
 import com.biblio.microservicereservation.model.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -17,7 +16,7 @@ public interface ReservationDAO extends JpaRepository<Reservation, Long> {
 
     List<Reservation> findByUserIdAndIsActiveTrue(Long userId);
 
-    List<Reservation> findByDocumentIdAndIsActiveTrueOrderByDateCreationDesc (Long documentId);
+    List<Reservation> findByDocumentIdAndIsActiveTrueOrderByDateCreationDesc(Long documentId);
 
     List<Reservation> findAllByIsActiveTrueOrderByDateCreationAsc();
 

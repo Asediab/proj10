@@ -29,6 +29,9 @@ public class Reservation {
     @Column(nullable = false)
     private String userSurname;
 
+    @Column(nullable = false)
+    private String userEmail;
+
     private boolean isActive;
 
     private boolean isMailSent;
@@ -150,6 +153,14 @@ public class Reservation {
         this.documentName = documentName;
     }
 
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
     @Override
     public String toString() {
         return "Reservation{" +
@@ -160,6 +171,7 @@ public class Reservation {
                 ", userId=" + userId +
                 ", userName='" + userName + '\'' +
                 ", userSurname='" + userSurname + '\'' +
+                ", userEmail='" + userEmail + '\'' +
                 ", isActive=" + isActive +
                 ", isMailSent=" + isMailSent +
                 ", isTakenByUser=" + isTakenByUser +

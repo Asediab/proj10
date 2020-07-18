@@ -22,7 +22,7 @@ public class ReservationController {
     @PostMapping(value = "/reservation/add")
     public ResponseEntity<Void> addReservation(@RequestBody Reservation reservation) {
 
-        if (reservationService.isReservationPossible(reservation.getDocumentId())){
+        if (reservationService.isReservationPossible(reservation.getDocumentId())) {
             Reservation newReservation = reservationService.saveNew(reservation);
             if (newReservation == null) {
                 throw new ReservationExistException("Reservation exist");
@@ -44,7 +44,7 @@ public class ReservationController {
     }
 
     @GetMapping(value = "/reservation/byUser/{userId}")
-    public List<Reservation> getByUserId (@PathVariable("userId") Long userId) throws ReservationsNotFoundException {
+    public List<Reservation> getByUserId(@PathVariable("userId") Long userId) throws ReservationsNotFoundException {
         List<Reservation> reservationList = reservationService.getReservationsByUserId(userId);
         if (reservationList.isEmpty()) {
             throw new ReservationsNotFoundException("Invalid userID or no reservations for this user");
@@ -53,7 +53,7 @@ public class ReservationController {
     }
 
     @GetMapping(value = "/reservation/byDocument/{documentId}")
-    public List<Reservation> getByDocumentId (@PathVariable("documentId") Long documentId) throws ReservationsNotFoundException {
+    public List<Reservation> getByDocumentId(@PathVariable("documentId") Long documentId) throws ReservationsNotFoundException {
         List<Reservation> reservationList = reservationService.getReservationsByDocumentId(documentId);
         if (reservationList.isEmpty()) {
             throw new ReservationsNotFoundException("Invalid DocumentID or no reservations for this document");

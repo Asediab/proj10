@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "microservice-document")
 public interface MicroserviceDocumentProxy {
 
-     @GetMapping(value = "/documents/{idCopyDoc}")
-     CopyOfDocument getDocumentByID(@PathVariable("idCopyDoc") Long docCopyID);
+    @GetMapping(value = "/documents/{idCopyDoc}")
+    CopyOfDocument getDocumentByID(@PathVariable("idCopyDoc") Long docCopyID);
 
 }

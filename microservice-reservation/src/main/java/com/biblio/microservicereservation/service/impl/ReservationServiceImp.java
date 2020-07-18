@@ -63,7 +63,7 @@ public class ReservationServiceImp implements ReservationService {
         long reservationCount = countReservationsByDocumentId(documentId);
         DocumentDTO doc = documentProxy.getDocumentByID(documentId);
         int resMax = doc.getCopyTotal() * 2;
-        if(reservationCount < resMax){
+        if (reservationCount < resMax) {
             return true;
         }
         return false;

@@ -50,10 +50,10 @@ public class UserController {
         return user;
     }
 
-    @RequestMapping(value="/logout", method= RequestMethod.POST)
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
     @ResponseBody
     public void logMeOut(HttpServletRequest request) {
-        String  token = (String) request.getAttribute("OAuth2AuthenticationDetails.ACCESS_TOKEN_VALUE");
+        String token = (String) request.getAttribute("OAuth2AuthenticationDetails.ACCESS_TOKEN_VALUE");
         if (token != null) {
             OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(token);
             if (oAuth2AccessToken != null) {

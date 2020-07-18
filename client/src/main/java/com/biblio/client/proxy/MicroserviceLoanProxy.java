@@ -25,7 +25,6 @@ public interface MicroserviceLoanProxy {
     List<LoanDTO> listLoansByDocumentId(@PathVariable("documentId") Long documentId);
 
 
-
     @Component
     class LoanFallback implements MicroserviceLoanProxy {
 

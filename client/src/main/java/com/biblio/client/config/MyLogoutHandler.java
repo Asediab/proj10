@@ -41,7 +41,8 @@ public class MyLogoutHandler implements LogoutHandler {
             HttpEntity request = new HttpEntity(params, headers);
             try {
                 ResponseEntity<String> response = restTemplate.exchange(logoutUrl, HttpMethod.POST, request, String.class);
-            } catch (HttpClientErrorException ignored) {}
+            } catch (HttpClientErrorException ignored) {
             }
         }
     }
+}

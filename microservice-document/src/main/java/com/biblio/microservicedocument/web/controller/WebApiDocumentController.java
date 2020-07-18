@@ -64,10 +64,9 @@ public class WebApiDocumentController {
     }
 
 
-
     @PutMapping(value = "/documents/api")
     public ResponseEntity<Void> returnDoc(@RequestBody @Valid CopyOfDocument copyOfDocument) {
-        if (copyOfDocumentService.getById(copyOfDocument.getId())==null) {
+        if (copyOfDocumentService.getById(copyOfDocument.getId()) == null) {
             throw new DocumentsNotFoundException("CopyOfDocument not exist");
         }
         copyOfDocument.setAvailable(Boolean.TRUE);
@@ -78,7 +77,7 @@ public class WebApiDocumentController {
 
     @DeleteMapping(value = "/documents/api")
     public ResponseEntity<Void> loanDoc(@RequestBody @Valid CopyOfDocument copyOfDocument) {
-        if (copyOfDocumentService.getById(copyOfDocument.getId())==null) {
+        if (copyOfDocumentService.getById(copyOfDocument.getId()) == null) {
             throw new DocumentsNotFoundException("CopyOfDocument not exist");
         }
         copyOfDocument.setAvailable(Boolean.FALSE);
@@ -97,7 +96,7 @@ public class WebApiDocumentController {
 
     @DeleteMapping(value = "/documents/API/deleteReservation/{idDoc}")
     public ResponseEntity<Void> deleteReservation(@PathVariable("idDoc") Long docID) {
-        if (documentService.deleteReservation(docID)==null) {
+        if (documentService.deleteReservation(docID) == null) {
             throw new DocumentsNotFoundException("Document not exist");
         }
         return ResponseEntity.status(HttpStatus.OK).build();
@@ -113,7 +112,7 @@ public class WebApiDocumentController {
 
     @DeleteMapping(value = "/documents/API/deleteCopyAvailable/{idDoc}")
     public ResponseEntity<Void> deleteCopyAvailable(@PathVariable("idDoc") Long docID) {
-        if (documentService.deleteCopyAvailable(docID)==null) {
+        if (documentService.deleteCopyAvailable(docID) == null) {
             throw new DocumentsNotFoundException("Document not exist");
         }
         return ResponseEntity.status(HttpStatus.OK).build();

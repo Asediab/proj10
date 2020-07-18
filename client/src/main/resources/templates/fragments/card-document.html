@@ -58,10 +58,11 @@
                                         <p class="col" th:utext="${document.reservations}"></p>
                                     </div>
                                 </li>
-                                <li class="list-group-item " th:if="${(document.copyTotal * 2) > document.reservations and !document.isUserHaveLoanOfDoc()}">
+                                <li class="list-group-item "
+                                    th:if="${(document.copyTotal * 2) > document.reservations and !document.isUserHaveLoanOfDoc()}">
                                     <div class="row">
                                         <p class="col">Make a reservation:</p>
-                                        <p class="col" >
+                                        <p class="col">
                                         <form class="col mt-1" method="post" th:action="@{/addReservations}">
                                             <label>
                                                 <input name="documentId" th:value="${document.id}" readonly

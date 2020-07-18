@@ -27,7 +27,7 @@ public class LoanController {
 
         LinkedHashMap map = (LinkedHashMap) principal.getUserAuthentication().getDetails();
         map = (LinkedHashMap) map.get("principal");
-       long userId = (int) map.get("id");
+        long userId = (int) map.get("id");
         Page<LoanDTO> page = loanService.loansByUser(pageable, userId);
         model.addAttribute("listLoans", page);
         model.addAttribute("url", "/");

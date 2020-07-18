@@ -41,8 +41,8 @@
                 <div th:replace="fragments/card-document :: card-document(${documents})"></div>
             </div>
         </div>
-                <div th:if="${documents.numberOfElements > 1}"
-                     th:replace="fragments/pagination :: pagination-pages(${numberOfPages}, ${documents}, ${url})"></div>
+        <div th:if="${documents.numberOfElements > 1}"
+             th:replace="fragments/pagination :: pagination-pages(${numberOfPages}, ${documents}, ${url})"></div>
     </div>
 </main>
 

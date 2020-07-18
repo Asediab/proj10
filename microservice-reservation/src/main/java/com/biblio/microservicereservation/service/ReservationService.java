@@ -17,9 +17,9 @@ public interface ReservationService {
 
     boolean reservationExist(Reservation reservation);
 
-    long countReservationsByDocumentId (Long documentId);
+    long countReservationsByDocumentId(Long documentId);
 
-    boolean isReservationPossible (Long documentId);
+    boolean isReservationPossible(Long documentId);
 
     List<Reservation> getReservationsByUserId(Long userId);
 

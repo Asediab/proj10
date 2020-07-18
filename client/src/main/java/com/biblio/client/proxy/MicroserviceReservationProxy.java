@@ -19,10 +19,10 @@ public interface MicroserviceReservationProxy {
     ResponseEntity<Void> deleteReservation(@RequestBody ReservationDTO reservation);
 
     @GetMapping(value = "/reservation/byUser/{userId}")
-    List<ReservationDTO> getByUserId (@PathVariable("userId") Long userId);
+    List<ReservationDTO> getByUserId(@PathVariable("userId") Long userId);
 
     @GetMapping(value = "/reservation/byDocument/{documentId}")
-    List<ReservationDTO> getByDocumentId (@PathVariable("documentId") Long documentId);
+    List<ReservationDTO> getByDocumentId(@PathVariable("documentId") Long documentId);
 
 
     @Component

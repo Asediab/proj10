@@ -19,8 +19,6 @@ public interface MicroserviceDocumentProxy {
     ResponseEntity<Void> deleteReservation(@PathVariable("idDoc") Long docID);
 
 
-
-
     class DocumentFallback implements MicroserviceDocumentProxy {
 
         @Override

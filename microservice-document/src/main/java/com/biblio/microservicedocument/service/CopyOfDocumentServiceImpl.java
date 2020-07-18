@@ -29,10 +29,10 @@ public class CopyOfDocumentServiceImpl implements CopyOfDocumentService {
     }
 
     @Override
-    public void refreshNumbrAvailableDoc(Document document){
-        List<CopyOfDocument>  list = copyOfDocumentDAO.findByDocumentAndAvailableIsTrue(document);
-       Document doc =  documentDAO.getOne(document.getId());
-       doc.setCopyAvailable(list.size());
+    public void refreshNumbrAvailableDoc(Document document) {
+        List<CopyOfDocument> list = copyOfDocumentDAO.findByDocumentAndAvailableIsTrue(document);
+        Document doc = documentDAO.getOne(document.getId());
+        doc.setCopyAvailable(list.size());
         documentDAO.save(doc);
     }
 }

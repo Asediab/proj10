@@ -40,7 +40,6 @@ public class LoanServiceImpl implements LoanService {
     }
 
 
-
     @Override
     public void prolongateLoan(Long loanId) {
         loanProxy.prolongateLoanPeriod(loanId);
@@ -49,9 +48,9 @@ public class LoanServiceImpl implements LoanService {
     @Override
     public LoanDTO dateExpirationLoanByDocumentId(Long documentId) {
         List<LoanDTO> loan = loanProxy.listLoansByDocumentId(documentId);
-        if (!loan.isEmpty()){
+        if (!loan.isEmpty()) {
             return loan.get(0);
-        }else {
+        } else {
             LoanDTO loanDTO = new LoanDTO();
             loanDTO.setDateExpiration(LocalDate.now());
             return loanDTO;

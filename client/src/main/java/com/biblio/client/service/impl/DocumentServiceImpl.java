@@ -70,11 +70,12 @@ public class DocumentServiceImpl implements DocumentService {
             long userId = (int) map.get("id");
             if (userId != 0L) {
                 List<LoanDTO> loanDTOList = loanProxy.listLoansByUser(userId);
-                for (LoanDTO loan : loanDTOList){
+                for (LoanDTO loan : loanDTOList) {
                     return loan.getDocumentId().equals(documentId);
                 }
             }
-        } catch (NullPointerException ignored) { }
+        } catch (NullPointerException ignored) {
+        }
         return false;
     }
 }

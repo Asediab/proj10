@@ -59,8 +59,8 @@ public class ReservationServiceImpl implements ReservationService {
         List<ReservationDTO> reservationDTOList = reservationProxy.getByDocumentId(documentId);
 
         int positionReservation = 0;
-        for (int i = 0 ; i <= reservationDTOList.size() - 1; i++) {
-            if (reservationDTOList.get(i).getId().equals(reservationId)){
+        for (int i = 0; i <= reservationDTOList.size() - 1; i++) {
+            if (reservationDTOList.get(i).getId().equals(reservationId)) {
                 positionReservation = i;
                 break;
             }
@@ -68,16 +68,18 @@ public class ReservationServiceImpl implements ReservationService {
         return positionReservation + 1;
     }
 
-    private ReservationDTO makeNewReservation (Long documentId, String documentName, OAuth2Authentication principal) {
+    private ReservationDTO makeNewReservation(Long documentId, String documentName, OAuth2Authentication principal) {
         LinkedHashMap map = (LinkedHashMap) principal.getUserAuthentication().getDetails();
         map = (LinkedHashMap) map.get("principal");
         long userId = (int) map.get("id");
         String userName = (String) map.get("name");
         String userSurname = (String) map.get("surname");
+        String userMail = (String) map.get("email");
         ReservationDTO newReservation = new ReservationDTO();
         newReservation.setUserId(userId);
         newReservation.setUserName(userName);
         newReservation.setUserSurname(userSurname);
+        newReservation.setUserEmail(userMail);
         newReservation.setDocumentName(documentName);
         newReservation.setDocumentId(documentId);
         return newReservation;

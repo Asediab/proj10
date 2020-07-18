@@ -13,6 +13,7 @@ create table reservation
     mail_sent_date       date,
     user_id              bigint       not null,
     user_name            varchar(255) not null,
+    user_email           varchar(255) not null,
     document_name        varchar(500) not null,
     user_surname         varchar(255) not null
 );

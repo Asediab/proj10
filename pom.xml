@@ -43,6 +43,7 @@
         <module>microservice-fileserver</module>
         <module>microservice-loan</module>
         <module>microservice-user</module>
+        <module>microservice-mail</module>
         <module>microservice-reservation</module>
         <module>client</module>
         <module>microservice-batch</module>
