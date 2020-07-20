@@ -1,9 +1,11 @@
 package com.biblio.microservicereservation.service.impl;
 
 import com.biblio.microservicereservation.DTO.DocumentDTO;
+import com.biblio.microservicereservation.DTO.ReservationDTO;
 import com.biblio.microservicereservation.dao.ReservationDAO;
 import com.biblio.microservicereservation.model.Reservation;
 import com.biblio.microservicereservation.proxy.MicroserviceDocumentProxy;
+import com.biblio.microservicereservation.proxy.MicroserviceMailProxy;
 import com.biblio.microservicereservation.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,9 @@ public class ReservationServiceImp implements ReservationService {
     private MicroserviceDocumentProxy documentProxy;
 
     @Autowired
+    private MicroserviceMailProxy mailProxy;
+
+    @Autowired
     private ReservationDAO reservationDAO;
 
     @Override
@@ -28,9 +33,10 @@ public class ReservationServiceImp implements ReservationService {
     @Override
     public void delete(Reservation reservation) {
         if (reservationDAO.existsByIsActiveTrueAndDocumentIdAndUserId(reservation.getDocumentId(), reservation.getUserId())) {
-            documentProxy.deleteReservation(reservation.getDocumentId());
-            reservation.setActive(Boolean.FALSE);
-            reservationDAO.save(reservation);
+            Reservation reservation1 = reservationDAO.findByDocumentIdAndUserIdAndIsActiveTrue(reservation.getDocumentId(), reservation.getUserId());
+            documentProxy.deleteReservation(reservation1.getDocumentId());
+            reservation1.setActive(Boolean.FALSE);
+            reservationDAO.save(reservation1);
         }
     }
 
@@ -82,5 +88,43 @@ public class ReservationServiceImp implements ReservationService {
     @Override
     public Reservation getOneActive(Long id) {
         return reservationDAO.findByIdAndIsActiveTrue(id);
+    }
+
+    @Override
+    public void mailSender(Long documentId) {
+        List<Reservation> reservationList = this.checkReservationMailExpirationDate(documentId);
+        if (!reservationList.isEmpty()){
+            for (int i = 0; i <= reservationList.size() - 1 ; i++) {
+                if (reservationList.get(i).isActive() && !reservationList.get(i).isMailSent()){
+                    Reservation reservation = reservationList.get(i);
+                    reservation.setMailSent(Boolean.TRUE);
+                    reservation.setMailSentDate(LocalDate.now());
+                    reservation.setMailExpirationDate(reservation.getMailSentDate().plusDays(2));
+                    ReservationDTO reservationDTO = new ReservationDTO();
+                    reservationDTO.setDocumentId(reservation.getDocumentId());
+                    reservationDTO.setUserName(reservation.getUserName());
+                    reservationDTO.setUserSurname(reservation.getUserSurname());
+                    reservationDTO.setUserEmail(reservation.getUserEmail());
+                    reservationDTO.setDocumentName(reservation.getDocumentName());
+                    mailProxy.sendMAil(reservationDTO);
+                    reservationDAO.save(reservation);
+                    break;
+                }
+            }
+        }
+    }
+
+    private List<Reservation> checkReservationMailExpirationDate(Long documentId) {
+        List<Reservation> reservationList = reservationDAO.findByIsActiveTrueAndDocumentIdOrderByDateCreationAsc(documentId);
+        if (!reservationList.isEmpty()){
+            for (int i = 0; i <= reservationList.size() - 1 ; i++) {
+                if (reservationList.get(i).isMailSent() && reservationList.get(i).getMailExpirationDate().isBefore(LocalDate.now())) {
+                    reservationList.get(i).setActive(Boolean.FALSE);
+                    reservationDAO.save(reservationList.get(i));
+                    documentProxy.deleteReservation(reservationList.get(i).getDocumentId());
+                }
+            }
+        }
+        return reservationList;
     }
 }

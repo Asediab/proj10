@@ -60,4 +60,12 @@ public class ReservationController {
         }
         return reservationList;
     }
+
+    @GetMapping(value = "/reservation/sendMail/{documentId}")
+    public ResponseEntity<Void> sendMail(@PathVariable("documentId") Long documentId) {
+
+        reservationService.mailSender(documentId);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

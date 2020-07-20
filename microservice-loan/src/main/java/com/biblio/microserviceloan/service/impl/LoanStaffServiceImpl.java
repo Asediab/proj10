@@ -1,8 +1,10 @@
 package com.biblio.microserviceloan.service.impl;
 
+import com.biblio.microserviceloan.DTO.ReservationDTO;
 import com.biblio.microserviceloan.dao.LoanDAO;
 import com.biblio.microserviceloan.model.Loan;
 import com.biblio.microserviceloan.proxy.MicroserviceDocumentProxy;
+import com.biblio.microserviceloan.proxy.MicroserviceReservationProxy;
 import com.biblio.microserviceloan.service.LoanStaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -20,6 +22,9 @@ public class LoanStaffServiceImpl implements LoanStaffService {
     @Autowired
     private MicroserviceDocumentProxy documentProxy;
 
+    @Autowired
+    private MicroserviceReservationProxy reservationProxy;
+
     @Override
     public Loan getOne(Long id) {
         return loanDAO.getOne(id);
@@ -28,6 +33,7 @@ public class LoanStaffServiceImpl implements LoanStaffService {
     @Override
     public void delete(Loan loan) {
         documentProxy.addCopyAvailable(loan.getDocumentId());
+        reservationProxy.sendMail(loan.getDocumentId());
         loanDAO.delete(loan);
     }
 
@@ -39,9 +45,18 @@ public class LoanStaffServiceImpl implements LoanStaffService {
             newLoan.setNumberOfRenewals(0);
             newLoan.setReturned(Boolean.FALSE);
             documentProxy.deleteCopyAvailable(newLoan.getDocumentId());
+            reservationProxy.deleteReservation(this.newReservation(newLoan));
             return loanDAO.save(newLoan);
         }
         return null;
+    }
+
+    private ReservationDTO newReservation(Loan loan){
+        ReservationDTO reservationDTO = new ReservationDTO();
+        reservationDTO.setDocumentId(loan.getDocumentId());
+        reservationDTO.setUserId(loan.getUserId());
+
+        return reservationDTO;
 
     }
 
