@@ -68,4 +68,13 @@ public class ReservationController {
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @GetMapping(value = "/reservation/sendMails")
+    public List<Reservation> sendListMail() {
+        List<Reservation> res = reservationService.getReservationsForMails();
+        if (res.isEmpty()) {
+            throw new ReservationExistException("Reservation not exist");
+        }
+        return res;
+    }
 }

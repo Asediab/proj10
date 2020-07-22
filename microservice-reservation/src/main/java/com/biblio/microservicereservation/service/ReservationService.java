@@ -5,6 +5,7 @@ import com.biblio.microservicereservation.DTO.ReservationDTO;
 import com.biblio.microservicereservation.model.Reservation;
 
 import java.util.List;
+import java.util.ListResourceBundle;
 
 public interface ReservationService {
 
@@ -27,5 +28,7 @@ public interface ReservationService {
     List<Reservation> getReservationsByDocumentId(Long documentId);
 
     void mailSender(Long documentId);
+
+    List<Reservation> getReservationsForMails();
 
 }

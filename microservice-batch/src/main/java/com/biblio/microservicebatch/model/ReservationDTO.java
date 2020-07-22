@@ -1,4 +1,4 @@
-package com.biblio.microservicemail.DTO;
+package com.biblio.microservicebatch.model;
 
 import javax.validation.constraints.Positive;
 import java.time.LocalDate;

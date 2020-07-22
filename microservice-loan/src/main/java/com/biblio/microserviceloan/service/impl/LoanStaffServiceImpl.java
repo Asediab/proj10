@@ -32,8 +32,7 @@ public class LoanStaffServiceImpl implements LoanStaffService {
 
     @Override
     public void delete(Loan loan) {
-        documentProxy.addCopyAvailable(loan.getDocumentId());
-        reservationProxy.sendMail(loan.getDocumentId());
+
         loanDAO.delete(loan);
     }
 
@@ -64,6 +63,8 @@ public class LoanStaffServiceImpl implements LoanStaffService {
     public Loan returnLoan(Loan loan) {
         if (loanExist(loan.getUserId(), loan.getCopyOfDocumentId())) {
             loan.setReturned(Boolean.TRUE);
+            documentProxy.addCopyAvailable(loan.getDocumentId());
+            reservationProxy.sendMail(loan.getDocumentId());
             return loanDAO.save(loan);
         }
         return null;

@@ -1,7 +1,8 @@
-package com.biblio.microservicemail.web.controller;
+package com.biblio.microservicebatch.controller;
 
-import com.biblio.microservicemail.DTO.ReservationDTO;
-import com.biblio.microservicemail.service.MailService;
+
+import com.biblio.microservicebatch.model.ReservationDTO;
+import com.biblio.microservicebatch.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

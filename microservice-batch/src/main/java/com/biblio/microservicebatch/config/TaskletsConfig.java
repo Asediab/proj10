@@ -20,7 +20,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 @Configuration
-@EnableScheduling
 public class TaskletsConfig {
 
     private JobBuilderFactory jobs;

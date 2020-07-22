@@ -5,12 +5,14 @@ import com.biblio.microservicereservation.DTO.ReservationDTO;
 import com.biblio.microservicereservation.dao.ReservationDAO;
 import com.biblio.microservicereservation.model.Reservation;
 import com.biblio.microservicereservation.proxy.MicroserviceDocumentProxy;
-import com.biblio.microservicereservation.proxy.MicroserviceMailProxy;
+import com.biblio.microservicereservation.proxy.MicroserviceBatchProxy;
 import com.biblio.microservicereservation.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -20,7 +22,7 @@ public class ReservationServiceImp implements ReservationService {
     private MicroserviceDocumentProxy documentProxy;
 
     @Autowired
-    private MicroserviceMailProxy mailProxy;
+    private MicroserviceBatchProxy mailProxy;
 
     @Autowired
     private ReservationDAO reservationDAO;
@@ -96,18 +98,17 @@ public class ReservationServiceImp implements ReservationService {
         if (!reservationList.isEmpty()){
             for (int i = 0; i <= reservationList.size() - 1 ; i++) {
                 if (reservationList.get(i).isActive() && !reservationList.get(i).isMailSent()){
-                    Reservation reservation = reservationList.get(i);
-                    reservation.setMailSent(Boolean.TRUE);
-                    reservation.setMailSentDate(LocalDate.now());
-                    reservation.setMailExpirationDate(reservation.getMailSentDate().plusDays(2));
+                    reservationList.get(i).setMailSent(Boolean.TRUE);
+                    reservationList.get(i).setMailSentDate(LocalDate.now());
+                    reservationList.get(i).setMailExpirationDate(reservationList.get(i).getMailSentDate().plusDays(2));
                     ReservationDTO reservationDTO = new ReservationDTO();
-                    reservationDTO.setDocumentId(reservation.getDocumentId());
-                    reservationDTO.setUserName(reservation.getUserName());
-                    reservationDTO.setUserSurname(reservation.getUserSurname());
-                    reservationDTO.setUserEmail(reservation.getUserEmail());
-                    reservationDTO.setDocumentName(reservation.getDocumentName());
+                    reservationDTO.setDocumentId(reservationList.get(i).getDocumentId());
+                    reservationDTO.setUserName(reservationList.get(i).getUserName());
+                    reservationDTO.setUserSurname(reservationList.get(i).getUserSurname());
+                    reservationDTO.setUserEmail(reservationList.get(i).getUserEmail());
+                    reservationDTO.setDocumentName(reservationList.get(i).getDocumentName());
                     mailProxy.sendMAil(reservationDTO);
-                    reservationDAO.save(reservation);
+                    reservationDAO.save(reservationList.get(i));
                     break;
                 }
             }
@@ -127,4 +128,45 @@ public class ReservationServiceImp implements ReservationService {
         }
         return reservationList;
     }
+
+    @Override
+    public List<Reservation> getReservationsForMails() {
+        List<Reservation> reservationList = this.setNotActiveByMailExpirationDate();
+        List<Reservation> listForMail = new ArrayList<>();
+        if (reservationList.isEmpty()){
+            return null;
+        } else {
+            for (Reservation reservation : reservationList) {
+                Reservation res = reservationDAO.findNextReservationByDocumentId(reservation.getDocumentId());
+                if (res != null){
+                    res.setMailSent(Boolean.TRUE);
+                    res.setMailSentDate(LocalDate.now());
+                    res.setMailExpirationDate(res.getMailSentDate().plusDays(2));
+                    reservationDAO.save(res);
+                    listForMail.add(res);
+                }
+            }
+            return listForMail;
+        }
+    }
+
+    private List<Reservation> setNotActiveByMailExpirationDate() {
+        List<Reservation> listNotActive = new ArrayList<>();
+        List<Reservation> listByDAO = reservationDAO.findByIsActiveTrueAndIsMailSentTrue();
+        if (listByDAO.isEmpty()){
+            return Collections.emptyList();
+        } else {
+            for (Reservation res : listByDAO) {
+                if (res.getMailExpirationDate().isBefore(LocalDate.now())) {
+                    res.setActive(Boolean.FALSE);
+                    reservationDAO.save(res);
+                    documentProxy.deleteReservation(res.getDocumentId());
+                    listNotActive.add(res);
+                }
+            }
+            return listNotActive;
+        }
+    }
+
+
 }

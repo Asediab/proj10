@@ -1,8 +1,8 @@
-package com.biblio.microservicemail.service.impl;
+package com.biblio.microservicebatch.service.impl;
 
-import com.biblio.microservicemail.DTO.ReservationDTO;
-import com.biblio.microservicemail.mail.MailSenderImpl;
-import com.biblio.microservicemail.service.MailService;
+import com.biblio.microservicebatch.mail.MailSenderImplReservation;
+import com.biblio.microservicebatch.model.ReservationDTO;
+import com.biblio.microservicebatch.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class MailServiceImpl implements MailService {
 
     @Autowired
-    private MailSenderImpl mailSender;
+    private MailSenderImplReservation mailSender;
 
     @Override
     public boolean sendEmail(ReservationDTO reservationDTO) {

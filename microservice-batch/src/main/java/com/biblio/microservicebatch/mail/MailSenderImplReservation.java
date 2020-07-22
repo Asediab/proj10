@@ -1,6 +1,7 @@
-package com.biblio.microservicemail.mail;
+package com.biblio.microservicebatch.mail;
 
-import com.biblio.microservicemail.DTO.ReservationDTO;
+
+import com.biblio.microservicebatch.model.ReservationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.function.Consumer;
 
 @Component
-public class MailSenderImpl  implements Consumer<ReservationDTO> {
+public class MailSenderImplReservation implements Consumer<ReservationDTO> {
 
     @Value("${spring.mail.username}")
     String emailFrom;
