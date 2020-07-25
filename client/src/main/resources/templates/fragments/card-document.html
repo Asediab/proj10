@@ -59,7 +59,7 @@
                                     </div>
                                 </li>
                                 <li class="list-group-item "
-                                    th:if="${(document.copyTotal * 2) > document.reservations and !document.isUserHaveLoanOfDoc()}">
+                                    th:if="${(document.copyTotal * 2) > document.reservations and !document.isUserHaveLoanOfDoc() and !document.isUserHaveReservationOfDoc()}">
                                     <div class="row">
                                         <p class="col">Make a reservation:</p>
                                         <p class="col">

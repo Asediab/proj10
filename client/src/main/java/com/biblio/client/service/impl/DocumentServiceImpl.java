@@ -30,6 +30,9 @@ public class DocumentServiceImpl implements DocumentService {
     @Autowired
     private MicroserviceLoanProxy loanProxy;
 
+    @Autowired
+    private MicroserviceReservationProxy reservationProxy;
+
     @Override
     public Page<DocumentDTO> getDocuments(Pageable pageable, String author, String title, OAuth2Authentication principal) {
         List<DocumentDTO> documentDTOList;
@@ -41,6 +44,7 @@ public class DocumentServiceImpl implements DocumentService {
         for (DocumentDTO dc : documentDTOList) {
             dc.setExpectedReturnDate(this.getReturnDate(dc));
             dc.setUserHaveLoanOfDoc(this.isUserHaveLoanForDocument(principal, dc.getId()));
+            dc.setUserHaveReservationOfDoc(this.isUserHaveReservationForDocument(principal, dc.getId()));
         }
         int start = (int) pageable.getOffset();
         int end = Math.min((start + pageable.getPageSize()), documentDTOList.size());
@@ -72,6 +76,24 @@ public class DocumentServiceImpl implements DocumentService {
                 List<LoanDTO> loanDTOList = loanProxy.listLoansByUser(userId);
                 for (LoanDTO loan : loanDTOList) {
                     return loan.getDocumentId().equals(documentId);
+                }
+            }
+        } catch (NullPointerException ignored) {
+        }
+        return false;
+    }
+
+    private boolean isUserHaveReservationForDocument(OAuth2Authentication principal, Long documentId) {
+        try {
+            LinkedHashMap map = (LinkedHashMap) principal.getUserAuthentication().getDetails();
+            map = (LinkedHashMap) map.get("principal");
+            long userId = (int) map.get("id");
+            if (userId != 0L) {
+                List<ReservationDTO> reservationDTOList = reservationProxy.getByUserId(userId);
+                for (ReservationDTO reservationDTO : reservationDTOList) {
+                    if (reservationDTO.getDocumentId().equals(documentId)) {
+                        return true;
+                    }
                 }
             }
         } catch (NullPointerException ignored) {

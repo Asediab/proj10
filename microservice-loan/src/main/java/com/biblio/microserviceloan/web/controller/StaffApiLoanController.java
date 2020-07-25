@@ -33,9 +33,7 @@ public class StaffApiLoanController {
             throw new LoanExistException("Loan not exist");
         }
         loanStaffService.returnLoan(loan);
-
         return ResponseEntity.status(HttpStatus.OK).build();
-
     }
 
     @GetMapping(value = "/loans/staffApi/loansByDate")

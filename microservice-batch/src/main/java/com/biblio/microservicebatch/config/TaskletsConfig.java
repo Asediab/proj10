@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
-@Configuration
+//@Configuration
 public class TaskletsConfig {
 
     private JobBuilderFactory jobs;
@@ -74,7 +74,7 @@ public class TaskletsConfig {
     }
 
 
-    @Scheduled(cron = "0 0 0 * * ?")
+//    @Scheduled(cron = "0 0 0 * * ?")
     public void run() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         jobLauncher.run(
                 job(),

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class StepMailSend implements Tasklet, StepExecutionListener {
+public class StepMailSendReservation implements Tasklet, StepExecutionListener {
 
     private List<ReservationDTO> reservationDTOS;
 
@@ -29,7 +29,7 @@ public class StepMailSend implements Tasklet, StepExecutionListener {
     @Override
     public void beforeStep(StepExecution stepExecution) {
         ExecutionContext executionContext = stepExecution.getJobExecution().getExecutionContext();
-        this.reservationDTOS = (ArrayList<ReservationDTO>) executionContext.get("reservationDTOS");
+        this.reservationDTOS = (List<ReservationDTO>) executionContext.get("reservationDTOS");
     }
 
     @Override

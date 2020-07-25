@@ -35,6 +35,9 @@ public class DocumentDTO implements Serializable {
     @JsonIgnore
     private boolean isUserHaveLoanOfDoc;
 
+    @JsonIgnore
+    private boolean isUserHaveReservationOfDoc;
+
 
     public DocumentDTO() {
     }
@@ -141,6 +144,14 @@ public class DocumentDTO implements Serializable {
 
     public void setUserHaveLoanOfDoc(boolean userHaveLoanOfDoc) {
         isUserHaveLoanOfDoc = userHaveLoanOfDoc;
+    }
+
+    public boolean isUserHaveReservationOfDoc() {
+        return isUserHaveReservationOfDoc;
+    }
+
+    public void setUserHaveReservationOfDoc(boolean userHaveReservationOfDoc) {
+        isUserHaveReservationOfDoc = userHaveReservationOfDoc;
     }
 
     @Override

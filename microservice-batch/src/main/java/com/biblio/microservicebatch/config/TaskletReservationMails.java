@@ -4,6 +4,8 @@ import com.biblio.microservicebatch.steps.StepGetCopyOfDocument;
 import com.biblio.microservicebatch.steps.StepGetLoans;
 import com.biblio.microservicebatch.steps.StepGetUser;
 import com.biblio.microservicebatch.steps.StepMailSend;
+import com.biblio.microservicebatch.steps.reservation.StepGetReservations;
+import com.biblio.microservicebatch.steps.reservation.StepMailSendReservation;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.JobParametersInvalidException;
@@ -28,49 +30,33 @@ public class TaskletReservationMails {
         private StepBuilderFactory steps;
         private JobLauncher jobLauncher;
 
-        private StepGetCopyOfDocument stepGetCopyOfDocument;
-        private StepGetLoans stepGetLoans;
-        private StepGetUser stepGetUser;
-        private StepMailSend stepMailSend;
+        private StepGetReservations stepGetReservations;
+        private StepMailSendReservation stepMailSendReservation;
 
-        public TaskletReservationMails(JobBuilderFactory jobs, StepBuilderFactory steps, JobLauncher jobLauncher, StepGetCopyOfDocument stepGetCopyOfDocument, StepGetLoans stepGetLoans, StepGetUser stepGetUser, StepMailSend stepMailSend) {
+        public TaskletReservationMails(JobBuilderFactory jobs, StepBuilderFactory steps, JobLauncher jobLauncher, StepGetReservations stepGetReservations, StepMailSendReservation stepMailSendReservation) {
             this.jobs = jobs;
             this.steps = steps;
             this.jobLauncher = jobLauncher;
-            this.stepGetCopyOfDocument = stepGetCopyOfDocument;
-            this.stepGetLoans = stepGetLoans;
-            this.stepGetUser = stepGetUser;
-            this.stepMailSend = stepMailSend;
+            this.stepGetReservations = stepGetReservations;
+            this.stepMailSendReservation = stepMailSendReservation;
         }
 
 
         @Bean
-        protected Step getLoans() {
-            return steps.get("getLoans").tasklet(stepGetLoans).build();
-        }
-
-        @Bean
-        protected Step getUser() {
-            return steps.get("getUser").tasklet(stepGetUser).build();
-        }
-
-        @Bean
-        protected Step getCopyOfDocument() {
-            return steps.get("getCopyOfDocument").tasklet(stepGetCopyOfDocument).build();
+        protected Step getReservations() {
+            return steps.get("getReservations").tasklet(stepGetReservations).build();
         }
 
         @Bean
         protected Step mailSend() {
-            return steps.get("mailSend").tasklet(stepMailSend).build();
+            return steps.get("stepMailSendReservation").tasklet(stepMailSendReservation).build();
         }
 
         @Bean
         public Job job() {
             return jobs
                     .get("TaskletReservationMails")
-                    .start(getLoans())
-                    .next(getUser())
-                    .next(getCopyOfDocument())
+                    .start(getReservations())
                     .next(mailSend())
                     .build();
         }

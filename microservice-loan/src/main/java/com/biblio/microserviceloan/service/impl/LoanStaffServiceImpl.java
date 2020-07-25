@@ -62,9 +62,9 @@ public class LoanStaffServiceImpl implements LoanStaffService {
     @Override
     public Loan returnLoan(Loan loan) {
         if (loanExist(loan.getUserId(), loan.getCopyOfDocumentId())) {
-            loan.setReturned(Boolean.TRUE);
             documentProxy.addCopyAvailable(loan.getDocumentId());
             reservationProxy.sendMail(loan.getDocumentId());
+            loan.setReturned(Boolean.TRUE);
             return loanDAO.save(loan);
         }
         return null;
