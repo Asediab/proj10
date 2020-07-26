@@ -19,8 +19,27 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
+        <java.version>14</java.version>
         <spring-cloud.version>Hoxton.SR4</spring-cloud.version>
+        <sonar.projectKey>Asediab_proj10</sonar.projectKey>
+        <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
+        <sonar.organization>asediab</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.login>4906ad19973f97f836aa2ff637d850d0edaae7bc</sonar.login>
+        <sonar.language>java</sonar.language>
+        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml,../target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.coverage.exclusions>
+            config-server/src/main/java/**/*
+            eureka-server/src/main/java/**/*
+            zuul-server/src/main/java/**/*
+            client/src/main/**/*
+            microservice-batch/src/**/*
+        </sonar.coverage.exclusions>
+        <sonar.cpd.exclusions>
+            **/*Bean.java,**/*DTO.java
+        </sonar.cpd.exclusions>
     </properties>
 
     <dependencyManagement>
@@ -47,4 +66,55 @@
         <module>client</module>
         <module>microservice-batch</module>
     </modules>
+
+    <build>
+        <!-- ================================================================= -->
+        <!--                                                 PLUGIN MANAGEMENT -->
+        <!-- ================================================================= -->
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.8.5</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <!-- ================================================================= -->
+        <!--                                                           PLUGINS -->
+        <!-- ================================================================= -->
+        <plugins>
+            <!-- ==================================================== Jacoco -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>prepare-and-report</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report-aggregate</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report-aggregate</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.basedir}/../target/site/jacoco-aggregate</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.7.0.1746</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>

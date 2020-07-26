@@ -1,0 +1,158 @@
+version: "3.3"
+
+services:
+  config:
+    container_name: config-server
+    image: maven:3.5.2-jdk-14
+    restart: unless-stopped
+    ports:
+      - "9093:9093"
+    networks:
+      net:
+        ipv4_address: 127.0.0.1
+
+  eureka:
+    container_name: eureka-server
+    image: maven:3.5.2-jdk-14
+    restart: unless-stopped
+    depends_on:
+      - "config"
+    ports:
+      - "9094:9094"
+    networks:
+      net:
+        ipv4_address: 127.0.0.1
+
+  zuul:
+    container_name: zuul-server
+    image: maven:3.5.2-jdk-14
+    restart: unless-stopped
+    depends_on:
+      - "config"
+      - "eureka"
+    ports:
+      - "9095:9095"
+    networks:
+      net:
+        ipv4_address: 127.0.0.1
+
+  postgres:
+    container_name: postgres
+    image: postgres:alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: usr
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      net:
+        ipv4_address: 127.0.0.1
+
+
+  batch:
+    container_name: microservice-batch
+    image: maven:3.5.2-jdk-14
+    restart: on-failure
+    depends_on:
+      - "config"
+      - "zuul"
+      - "user"
+    ports:
+      - "9097:9097"
+    networks:
+      net:
+        ipv4_address: 127.0.0.1
+
+  document:
+    container_name: microservice-document
+    image: maven:3.5.2-jdk-14
+    restart: on-failure
+
+    depends_on:
+      - "config"
+      - "postgres"
+      - "user"
+    ports:
+      - "9091:9091"
+    networks:
+      net:
+        ipv4_address: 127.0.0.1
+
+  fileserver:
+    container_name: microservice-fileserver
+    image: maven:3.5.2-jdk-14
+    restart: on-failure
+    depends_on:
+      - "config"
+      - "user"
+    ports:
+      - "9092:9092"
+    networks:
+      net:
+        ipv4_address: 127.0.0.1
+
+  loan:
+    container_name: microservice-loan
+    image: maven:3.5.2-jdk-14
+    restart: on-failure
+    depends_on:
+      - "config"
+      - "postgres"
+      - "user"
+    ports:
+      - "9090:9090"
+    networks:
+      net:
+        ipv4_address: 127.0.0.1
+
+  reservation:
+    container_name: microservice-reservation
+    image: maven:3.5.2-jdk-14
+    restart: on-failure
+    depends_on:
+      - "config"
+      - "postgres"
+      - "user"
+    ports:
+      - "9100:9100"
+    networks:
+      net:
+        ipv4_address: 127.0.0.1
+
+  user:
+    container_name: microservice-user
+    image: maven:3.5.2-jdk-14
+    restart: on-failure
+    depends_on:
+      - "config"
+      - "postgres"
+    ports:
+      - "9096:9096"
+    networks:
+      net:
+        ipv4_address: 127.0.0.1
+
+  client:
+    container_name: client
+    image: maven:3.5.2-jdk-14
+    restart: on-failure
+    depends_on:
+      - "config"
+      - "eureka"
+      - "document"
+      - "fileserver"
+      - "loan"
+      - "reservation"
+    ports:
+      - "9099:9099"
+    networks:
+      net:
+        ipv4_address: 127.0.0.1
+
+volumes:
+  postgres:

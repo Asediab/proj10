@@ -9,7 +9,6 @@ import com.biblio.client.proxy.MicroserviceLoanProxy;
 import com.biblio.client.proxy.MicroserviceReservationProxy;
 import com.biblio.client.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -36,7 +35,7 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public Page<DocumentDTO> getDocuments(Pageable pageable, String author, String title, OAuth2Authentication principal) {
         List<DocumentDTO> documentDTOList;
-        if (author.isEmpty() & title.isEmpty()) {
+        if (author.isEmpty() && title.isEmpty()) {
             documentDTOList = documentProxy.listDocuments();
         } else {
             documentDTOList = documentProxy.searchDocuments(title, author);
@@ -48,9 +47,8 @@ public class DocumentServiceImpl implements DocumentService {
         }
         int start = (int) pageable.getOffset();
         int end = Math.min((start + pageable.getPageSize()), documentDTOList.size());
-        Page<DocumentDTO> pages = new PageImpl<DocumentDTO>(documentDTOList.subList(start, end), pageable, documentDTOList.size());
 
-        return pages;
+        return new PageImpl<>(documentDTOList.subList(start, end), pageable, documentDTOList.size());
     }
 
     @Override
@@ -68,6 +66,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     private boolean isUserHaveLoanForDocument(OAuth2Authentication principal, Long documentId) {
+        boolean result = false;
         try {
             LinkedHashMap map = (LinkedHashMap) principal.getUserAuthentication().getDetails();
             map = (LinkedHashMap) map.get("principal");
@@ -75,12 +74,15 @@ public class DocumentServiceImpl implements DocumentService {
             if (userId != 0L) {
                 List<LoanDTO> loanDTOList = loanProxy.listLoansByUser(userId);
                 for (LoanDTO loan : loanDTOList) {
-                    return loan.getDocumentId().equals(documentId);
+                    if (loan.getDocumentId().equals(documentId)){
+                        result = true;
+                        break;
+                    }
                 }
             }
         } catch (NullPointerException ignored) {
         }
-        return false;
+        return result;
     }
 
     private boolean isUserHaveReservationForDocument(OAuth2Authentication principal, Long documentId) {
