@@ -18,14 +18,17 @@ import java.util.List;
 @Service
 public class ReservationServiceImp implements ReservationService {
 
-    @Autowired
-    private MicroserviceDocumentProxy documentProxy;
+    private final MicroserviceDocumentProxy documentProxy;
 
-    @Autowired
-    private MicroserviceBatchProxy mailProxy;
+    private final MicroserviceBatchProxy mailProxy;
 
-    @Autowired
-    private ReservationDAO reservationDAO;
+    private final ReservationDAO reservationDAO;
+
+    public ReservationServiceImp(MicroserviceDocumentProxy documentProxy, MicroserviceBatchProxy mailProxy, ReservationDAO reservationDAO) {
+        this.documentProxy = documentProxy;
+        this.mailProxy = mailProxy;
+        this.reservationDAO = reservationDAO;
+    }
 
     @Override
     public Reservation getOne(Long id) {
@@ -134,7 +137,7 @@ public class ReservationServiceImp implements ReservationService {
         List<Reservation> reservationList = this.setNotActiveByMailExpirationDate();
         List<Reservation> listForMail = new ArrayList<>();
         if (reservationList.isEmpty()){
-            return null;
+            return Collections.emptyList();
         } else {
             for (Reservation reservation : reservationList) {
                 Reservation res = reservationDAO.findNextReservationByDocumentId(reservation.getDocumentId());

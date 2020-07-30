@@ -1,6 +1,6 @@
 version: '3.3'
 services:
-  myerp.db:
+  biblio.db:
     image: postgres:12.3
     ports:
       - "127.0.0.1:9032:5432"

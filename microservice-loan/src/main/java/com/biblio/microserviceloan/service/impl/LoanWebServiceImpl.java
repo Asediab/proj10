@@ -12,8 +12,11 @@ import java.util.List;
 @Service
 public class LoanWebServiceImpl implements LoanWebService {
 
-    @Autowired
-    private LoanDAO loanDAO;
+    private final LoanDAO loanDAO;
+
+    public LoanWebServiceImpl(LoanDAO loanDAO) {
+        this.loanDAO = loanDAO;
+    }
 
     @Override
     public Loan getOne(Long id) {

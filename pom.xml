@@ -31,14 +31,22 @@
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml,../target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         <sonar.coverage.exclusions>
-            config-server/src/main/java/**/*
-            eureka-server/src/main/java/**/*
-            zuul-server/src/main/java/**/*
-            client/src/main/**/*
-            microservice-batch/src/**/*
+            config-server/src/**/*,
+            eureka-server/src/**/*,
+            zuul-server/src/**/*,
+            client/src/**/*,
+            microservice-batch/src/**/*,
+            **/*Bean.java,
+            **/*DTO.java,
+            **/*Proxy.java,
+            **/*Configuration.java,
+            **/*Exception.java,
+            **/*Controller.java,
+            **/*Config.java
         </sonar.coverage.exclusions>
         <sonar.cpd.exclusions>
-            **/*Bean.java,**/*DTO.java
+            **/*Bean.java,
+            **/*DTO.java
         </sonar.cpd.exclusions>
     </properties>
 

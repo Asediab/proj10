@@ -16,14 +16,17 @@ import java.util.List;
 @Service
 public class LoanStaffServiceImpl implements LoanStaffService {
 
-    @Autowired
-    private LoanDAO loanDAO;
+    private final LoanDAO loanDAO;
 
-    @Autowired
-    private MicroserviceDocumentProxy documentProxy;
+    private final MicroserviceDocumentProxy documentProxy;
 
-    @Autowired
-    private MicroserviceReservationProxy reservationProxy;
+    private final MicroserviceReservationProxy reservationProxy;
+
+    public LoanStaffServiceImpl(LoanDAO loanDAO, MicroserviceDocumentProxy documentProxy, MicroserviceReservationProxy reservationProxy) {
+        this.loanDAO = loanDAO;
+        this.documentProxy = documentProxy;
+        this.reservationProxy = reservationProxy;
+    }
 
     @Override
     public Loan getOne(Long id) {
@@ -32,7 +35,6 @@ public class LoanStaffServiceImpl implements LoanStaffService {
 
     @Override
     public void delete(Loan loan) {
-
         loanDAO.delete(loan);
     }
 
@@ -72,10 +74,7 @@ public class LoanStaffServiceImpl implements LoanStaffService {
 
     private boolean loanExist(Long userId, Long documentID) {
         Loan loan = loanDAO.findByUserIdAndCopyOfDocumentIdAndReturnedIsFalse(userId, documentID);
-        if (loan == null) {
-            return false;
-        }
-        return true;
+        return loan != null;
     }
 
     @Override

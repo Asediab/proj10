@@ -12,8 +12,11 @@ import java.util.List;
 @Service
 public class DocumentServiceImpl implements DocumentService {
 
-    @Autowired
-    private DocumentDAO documentDAO;
+    private final DocumentDAO documentDAO;
+
+    public DocumentServiceImpl(DocumentDAO documentDAO) {
+        this.documentDAO = documentDAO;
+    }
 
     @Override
     public List<Document> filter(String titre, String author) {

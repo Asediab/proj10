@@ -12,11 +12,14 @@ import java.util.List;
 @Service
 public class CopyOfDocumentServiceImpl implements CopyOfDocumentService {
 
-    @Autowired
-    private CopyOfDocumentDAO copyOfDocumentDAO;
+    private final CopyOfDocumentDAO copyOfDocumentDAO;
 
-    @Autowired
-    private DocumentDAO documentDAO;
+    private final DocumentDAO documentDAO;
+
+    public CopyOfDocumentServiceImpl(CopyOfDocumentDAO copyOfDocumentDAO, DocumentDAO documentDAO) {
+        this.copyOfDocumentDAO = copyOfDocumentDAO;
+        this.documentDAO = documentDAO;
+    }
 
     @Override
     public CopyOfDocument getById(Long id) {
