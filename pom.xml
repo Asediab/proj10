@@ -36,6 +36,8 @@
             zuul-server/src/**/*,
             client/src/**/*,
             microservice-batch/src/**/*,
+            microservice-fileserver/src/**/*,
+            **/model/**/*,
             **/*Bean.java,
             **/*DTO.java,
             **/*Proxy.java,
