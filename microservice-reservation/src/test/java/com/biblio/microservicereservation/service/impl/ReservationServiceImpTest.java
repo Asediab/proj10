@@ -158,7 +158,7 @@ class ReservationServiceImpTest {
     @Tag("testGetReservationsByDocumentId")
     @DisplayName("Test GetReservationsByDocumentId")
     void testGetReservationsByDocumentId() {
-        when(reservationDAO.findByDocumentIdAndIsActiveTrueOrderByDateCreationDesc(anyLong())).thenReturn(Collections.singletonList(res1));
+        when(reservationDAO.findByDocumentIdAndIsActiveTrueOrderByDateCreationAsc(anyLong())).thenReturn(Collections.singletonList(res1));
 
         List<Reservation> result = reservationServiceImp.getReservationsByDocumentId(1L);
         Assertions.assertEquals(Collections.singletonList(res1), result);

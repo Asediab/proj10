@@ -3,12 +3,10 @@ services:
   biblio.db:
     image: postgres:12.3
     ports:
-      - "127.0.0.1:9032:5432"
+      - "127.0.0.1:5432:5432"
     volumes:
-#      - "./data/db:/var/lib/postgresql/data"
        - "./init/db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d"
     environment:
       POSTGRES_USER: loan
-      POSTGRES_PASSWORD: 0000
+      POSTGRES_PASSWORD: 0
       POSTGRES_DB: usr
-      

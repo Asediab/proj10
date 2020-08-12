@@ -1,9 +1,10 @@
 package com.biblio.microservicebatch.model;
 
 import javax.validation.constraints.Positive;
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class ReservationDTO {
+public class ReservationDTO implements Serializable {
 
     private Long id;
 

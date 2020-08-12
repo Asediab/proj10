@@ -17,7 +17,7 @@ public interface ReservationDAO extends JpaRepository<Reservation, Long> {
 
     List<Reservation> findByUserIdAndIsActiveTrue(Long userId);
 
-    List<Reservation> findByDocumentIdAndIsActiveTrueOrderByDateCreationDesc(Long documentId);
+    List<Reservation> findByDocumentIdAndIsActiveTrueOrderByDateCreationAsc(Long documentId);
 
     Reservation findByDocumentIdAndUserIdAndIsActiveTrue(Long documentId, Long userId);
 

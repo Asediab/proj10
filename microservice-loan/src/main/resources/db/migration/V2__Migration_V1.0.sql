@@ -1,0 +1,1 @@
+ALTER TABLE loan ADD COLUMN document_id int8 not null default 0;

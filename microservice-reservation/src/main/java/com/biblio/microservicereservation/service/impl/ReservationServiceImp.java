@@ -87,7 +87,7 @@ public class ReservationServiceImp implements ReservationService {
 
     @Override
     public List<Reservation> getReservationsByDocumentId(Long documentId) {
-        return reservationDAO.findByDocumentIdAndIsActiveTrueOrderByDateCreationDesc(documentId);
+        return reservationDAO.findByDocumentIdAndIsActiveTrueOrderByDateCreationAsc(documentId);
     }
 
     @Override

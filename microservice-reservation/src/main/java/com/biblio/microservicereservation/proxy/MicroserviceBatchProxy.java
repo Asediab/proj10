@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(name = "microservice-batch", fallback = MicroserviceBatchProxy.MailFallback.class, configuration = AccountClientConfiguration.class)
-
 public interface MicroserviceBatchProxy {
 
     @PostMapping(value = "/mail/send")
     ResponseEntity<Void> sendMAil(@RequestBody ReservationDTO reservationDTO);
+
 
 
     class MailFallback implements MicroserviceBatchProxy {

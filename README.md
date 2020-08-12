@@ -1,51 +1,46 @@
 # OCR - Projet 10
 
-# Fonctionnalités proposées
+# Besoins du Client
 
-F1 : Un utilisateur doit pouvoir consulter des ouvrages.
+Ticket#1 : Ajoutez un système de réservation d’ouvrages (par le client).
 
-F2 : Un utilisateur doit pouvoir rechercher des ouvrages et voir le nombre d’exemplaires disponibles.
+Ticket#2 : Corrigez un bug dans la gestion des prolongations de prêt (par le client).
 
-F3 : Un utilisateur doit pouvoir consulter ses prêts en cours.
-
-F4 : Un utilisateur connecté doit pouvoir prolonger un prêt en cours.
-
-F5 : Le logiciel pour les traitements automatisés permet d’envoyer des mails de relance aux usagers n’ayant pas rendu les livres en fin de période de prêt. L’envoi est automatique à la fréquence d’un par jour.
+Ticket#3 : Mettez en place une stratégie de tests (par le Tech Lead).
 
 
 
 # Déploiement de l'application
 
 ## Préparation de la base de données
-Pour le fonctionnement normal de notre système, il faut créer trois bases de données et un utilisateur de ces bases de données.
- 
- Exécutez les commandes suivantes à ligne de commandes Postgres :
- 
- Si vous n'avez pas d'utilisateur de Postgres
- 
-   `CREATE USER loan WITH password '0000';` 
- 
-   `CREATE DATABASE document WITH OWNER loan;`
-   
-   `CREATE DATABASE loan WITH OWNER loan;`
-   
-   `CREATE DATABASE usr WITH OWNER loan;`
-   
-    
- Si vous avez déjà un utilisateur de Postgres
-  
-   `CREATE DATABASE document WITH OWNER NOM_UTILISATEUR;`
-   
-   `CREATE DATABASE loan WITH OWNER NOM_UTILISATEUR;`
-   
-   `CREATE DATABASE usr WITH OWNER NOM_UTILISATEUR;`
-   et apporter des modifications aux fichiers de configurations :
-   
-   _config-server/src/main/resources/shared/microservice-document.properties_
-   
-   _config-server/src/main/resources/shared/microservice-loan.properties_
-   
-   _config-server/src/main/resources/shared/microservice-user.properties_
+Les composants nécessaires lors du développement sont disponibles via des conteneurs docker. L'environnement de développement est assemblé
+grâce à docker-compose (cf docker/dev/docker-compose.yml). 
+
+Il comporte : 
+
+une base de données PostgreSQL contenant un jeu de données de démo (postgresql://127.0.0.1:9032/) 
+
+`Lancement` 
+
+cd docker/dev
+
+docker-compose up
+
+`Arrêt` 
+
+cd docker/dev
+
+docker-compose stop
+
+`Remise à zero`
+
+cd docker/dev
+
+docker-compose stop
+
+docker-compose rm -v
+
+docker-compose up
    
     
  
@@ -94,8 +89,9 @@ La procédure est la suivante :
     5. microservice-fileserver
     6. microservice-loan
     7. microservice-user
-    8. client
-    9. microservice-batch
+    8. microservice-reservation
+    9. client
+    10. microservice-batch
 
 4) Ouvrir un browser web à l'adresse http://localhost:9099
 
@@ -103,7 +99,7 @@ La procédure est la suivante :
 ## Jeu de donné de démo
 Les utilisateurs enregistrés dans la base de données.
 
-Email :`ocr.proj7@yandex.ru` Mot de pass :`user`
+Email :`ocr.proj07@yandex.ru` Mot de pass :`user`
  
 Email :`user2@user.com` Mot de pass :`user`
 
@@ -145,12 +141,3 @@ L'application utilise les frameworks & projets suivants:
 
 15) _QueryDsl_ 
 
-
-# Livrables attendus
-L'ensemble des livrables attendus sont inclus dans le projet Gitlab :
-1) Code source : ce dépôt
-2) Scripts SQL de création de la BdD et jeu de données de démo :
-    * Creation des tables _NOM_DE_MICROSERVICE/src/main/resources/db/migration/V1__Init_DB.sql_
- 
-    * Jeu de donné de démo _NOM_DE_MICROSERVICE/src/main/resources/db/migration/V3__Test_data.sql_
-3) Documentation succincte : ce fichier _README.md_
