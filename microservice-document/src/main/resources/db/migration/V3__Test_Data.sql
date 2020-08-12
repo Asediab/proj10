@@ -21,7 +21,7 @@ SELECT pg_catalog.setval('library_id_seq', 2, true);
 INSERT INTO public.document (id, author, copy_available, copy_total, reservations, number_of_pages, titre,
                              year_os_issue, type_of_document_id,
                              photo, description)
-VALUES (1, 'Marcel Proust', 0, 4, 2, 350, 'À la recherche du temps perdu', '1995-04-25', 1, 'tempperdu',
+VALUES (1, 'Marcel Proust', 0, 4, 3, 350, 'À la recherche du temps perdu', '1995-04-25', 1, 'tempperdu',
         'À la recherche du temps perdu, couramment évoqué plus simplement sous le titre La Recherche, est un roman de Marcel Proust, écrit de 1906 à 1922 et publié de 1913 à 1927 en sept tomes, dont les trois derniers parurent après la mort de lauteur');
 INSERT INTO public.document (id, author, copy_available, copy_total, reservations, number_of_pages, titre,
                              year_os_issue, type_of_document_id,
